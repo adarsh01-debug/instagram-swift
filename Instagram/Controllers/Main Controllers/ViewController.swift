@@ -20,6 +20,9 @@ class ViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func loginAction(_ sender: Any) {
+        if let mainTabViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "MainTabViewController") as? MainTabViewController {
+            navigationController?.pushViewController(mainTabViewController, animated: true)
+        }
     }
     
     @IBAction func signUpAction(_ sender: Any) {

@@ -7,17 +7,29 @@
 
 import UIKit
 
-class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: - Outlets
     
     @IBOutlet var storyCollectionView: UICollectionView!
-    @IBOutlet var feedCollectionView: UICollectionView!
+    @IBOutlet var feedTableView: UITableView!
+    
     
     // MARK: - Variables
     
     let storyKCellIdentifier = "StoryCollectionViewCell"
-    let feedKCellIdentifier = "FeedCollectionViewCell"
+    let feedKCellIdentifier = "FeedTableViewCell"
+    
+    let postModel: [PostModel] = [
+        PostModel(profilePic: "https://images.unsplash.com/photo-1492528491602-a42e1caf03ad?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80", username: "adarsh.not.found", imageURL: "https://i0.wp.com/the-shooting-star.com/wp-content/uploads/2020/03/travel-advice-coronavirus-1.jpg?w=2520&ssl=1", videoURL: nil, caption: nil),
+        PostModel(profilePic: "https://images.unsplash.com/photo-1492528491602-a42e1caf03ad?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80", username: "jhonny.test", imageURL: "https://i0.wp.com/the-shooting-star.com/wp-content/uploads/2020/03/travel-advice-coronavirus-1.jpg?w=2520&ssl=1", videoURL: nil, caption: nil),
+        PostModel(profilePic: "https://images.unsplash.com/photo-1492528491602-a42e1caf03ad?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80", username: "whats_in_a_name", imageURL: nil, videoURL: nil, caption: nil),
+        PostModel(profilePic: "https://images.unsplash.com/photo-1492528491602-a42e1caf03ad?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80", username: "who_am_i", imageURL: nil, videoURL: "https://content.jwplatform.com/manifests/vM7nH0Kl.m3u8", caption: nil),
+        PostModel(profilePic: nil, username: "lmao.rofl", imageURL: "https://i0.wp.com/the-shooting-star.com/wp-content/uploads/2020/03/travel-advice-coronavirus-1.jpg?w=2520&ssl=1", videoURL: nil, caption: nil),
+        PostModel(profilePic: "https://images.unsplash.com/photo-1492528491602-a42e1caf03ad?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80", username: "say_my_name", imageURL: nil, videoURL: "https://content.jwplatform.com/manifests/vM7nH0Kl.m3u8", caption: nil),
+        PostModel(profilePic: "https://images.unsplash.com/photo-1492528491602-a42e1caf03ad?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80", username: "idk.idc", imageURL: "https://i0.wp.com/the-shooting-star.com/wp-content/uploads/2020/03/travel-advice-coronavirus-1.jpg?w=2520&ssl=1", videoURL: nil, caption: nil),
+        PostModel(profilePic: "https://images.unsplash.com/photo-1492528491602-a42e1caf03ad?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80", username: "bored_now", imageURL: nil, videoURL: "https://content.jwplatform.com/manifests/vM7nH0Kl.m3u8", caption: nil)
+    ]
     
     
     // MARK: - Functions
@@ -31,16 +43,16 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         storyCollectionView.delegate = self
         storyCollectionView.dataSource = self
         
-        feedCollectionView.delegate = self
-        feedCollectionView.dataSource = self
+        feedTableView.delegate = self
+        feedTableView.dataSource = self
     }
     
     func registerCustomViewInCell() {
         let nib = UINib(nibName: "StoryCollectionViewCell", bundle: nil)
         storyCollectionView.register(nib, forCellWithReuseIdentifier: storyKCellIdentifier)
         
-        let newNib = UINib(nibName: "FeedCollectionViewCell", bundle: nil)
-        feedCollectionView.register(newNib, forCellWithReuseIdentifier: feedKCellIdentifier)
+        let newNib = UINib(nibName: "FeedTableViewCell", bundle: nil)
+        feedTableView.register(newNib, forCellReuseIdentifier: feedKCellIdentifier)
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -50,10 +62,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == storyCollectionView {
             return 10
-        } else if collectionView == feedCollectionView {
-            return 10
         }
-        
         return 0
     }
     
@@ -62,41 +71,18 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             guard let cell = storyCollectionView.dequeueReusableCell(withReuseIdentifier: storyKCellIdentifier, for: indexPath) as? StoryCollectionViewCell else {
                 return UICollectionViewCell()
             }
-//            cell.storyImage.layer.masksToBounds = true
-//            cell.storyImage.layer.cornerRadius = 50.0
-            
-//            cell.storyImage.makeRoundCorners(byRadius: 43)
             
             // Configure the cell
-            cell.storyImage.layer.borderWidth = 1
+            cell.storyImage.layer.borderWidth = 0.5
             cell.storyImage.layer.masksToBounds = false
-            cell.storyImage.layer.borderColor = UIColor.black.cgColor
+            cell.storyImage.layer.borderColor = UIColor.gray.cgColor
             cell.storyImage.layer.cornerRadius = cell.storyImage.frame.height / 2
             cell.storyImage.clipsToBounds = true
             
-//            cell.storyImage.image = UIImage(systemName: "person.fill")
             cell.storyName.text = "Adarsh"
             return cell
-            
-        } else if collectionView == feedCollectionView {
-            guard let cell = feedCollectionView.dequeueReusableCell(withReuseIdentifier: feedKCellIdentifier, for: indexPath) as? FeedCollectionViewCell else {
-                return UICollectionViewCell()
-            }
-            
-            // Configure the cell
-            cell.userProfileImage.layer.borderWidth = 0.5
-            cell.userProfileImage.layer.masksToBounds = false
-            cell.userProfileImage.layer.borderColor = UIColor.black.cgColor
-            cell.userProfileImage.layer.cornerRadius = cell.userProfileImage.frame.height / 2
-            cell.userProfileImage.clipsToBounds = true
-            
-            cell.userName.text = "Adarsh"
-            cell.post.contentMode = .scaleToFill
-            cell.userNameTwo.text = "Adarsh"
-            cell.caption.text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
-            
-            return cell
-        } else {
+        }
+    else {
             return UICollectionViewCell()
         }
     }
@@ -105,8 +91,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         if collectionView == storyCollectionView {
             return CGSize(width: storyCollectionView.bounds.height, height: storyCollectionView.bounds.height)
-        } else if collectionView == feedCollectionView {
-            return CGSize(width: feedCollectionView.bounds.width , height: feedCollectionView.bounds.height)
         } else {
             return CGSize(width: 0.0, height: 0.0)
         }
@@ -119,12 +103,81 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 10.0
     }
+    
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        if let secondScreenController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "SecondScreenController") as? SecondScreenController {
+//
+//            secondScreenController.titleLabel = brandData?[indexPath.row].name
+//            secondScreenController.priceLabel = brandData?[indexPath.row].price
+//            secondScreenController.productTypeLabel = brandData?[indexPath.row].productType
+//            secondScreenController.descriptionLabel = brandData?[indexPath.row].welcomeDescription
+//            secondScreenController.urlLabel = brandData?[indexPath.row].imageLink
+//            secondScreenController.rating = brandData?[indexPath.row].rating
+//            secondScreenController.shades = brandData?[indexPath.row].productColours
+//            navigationController?.pushViewController(secondScreenController, animated: true)
+//        } else {
+//            print("Error getitng detail view controller")
+//        }
+//    }
 
-}
-
-extension UIImageView {
-   func makeRoundCorners(byRadius rad: CGFloat) {
-      self.layer.cornerRadius = rad
-      self.clipsToBounds = true
-   }
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return postModel.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: feedKCellIdentifier, for: indexPath) as? FeedTableViewCell else {
+            print("Failed to create the custom cell")
+            return UITableViewCell()
+        }
+        
+        let data = postModel[indexPath.row]
+        
+        cell.profilePic.layer.borderWidth = 0.5
+        cell.profilePic.layer.masksToBounds = false
+        cell.profilePic.layer.borderColor = UIColor.gray.cgColor
+        cell.profilePic.layer.cornerRadius = cell.profilePic.frame.height / 2
+        cell.profilePic.clipsToBounds = true
+        
+        if let profileUrl = data.profilePic {
+            cell.profilePic.load(url: URL(string: profileUrl)!)
+        } else {
+            cell.profilePic.image = UIImage(systemName: "person")
+        }
+        
+        cell.userName.text = data.username
+        
+        if let postImage = data.imageURL, data.videoURL == nil {
+            cell.postImage.load(url: URL(string: postImage)!)
+            cell.postImage.contentMode = .scaleToFill
+            cell.videoLayer.isHidden = true
+        }
+        
+        if let videoUrl = data.videoURL, data.imageURL == nil {
+            cell.url = videoUrl
+            cell.imageView?.isHidden = true
+            cell.videoLayer.isHidden = false
+        }
+        
+        if data.imageURL == nil, data.videoURL == nil {
+            cell.imageView?.isHidden = true
+            cell.videoLayer.isHidden = true
+        }
+        
+        //cell.caption.text = data.caption
+        
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if postModel[indexPath.row].imageURL != nil || postModel[indexPath.row].videoURL != nil {
+            return 530;
+        } else {
+            return 230;
+        }
+    }
 }
