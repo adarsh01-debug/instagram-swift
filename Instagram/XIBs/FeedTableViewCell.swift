@@ -14,7 +14,10 @@ class FeedTableViewCell: UITableViewCell {
     var isPaused: Bool = true
     var isLiked: Bool = false
     var isDisliked: Bool = false
+    var isViewMore: Bool = true
     var url: String?
+    var delegate: CommentsDelegate?
+    var postDelegate: PostDetailDelegate?
 
     // MARK: - Outlets
     @IBOutlet var profilePic: UIImageView!
@@ -29,6 +32,7 @@ class FeedTableViewCell: UITableViewCell {
     @IBOutlet var videoLayer: UIView!
     @IBOutlet var player: UIView!
     @IBOutlet var playPause: UIButton!
+    @IBOutlet var viewMoreOutlet: UIButton!
     
     // MARK: - Actions
     @IBAction func playPauseAction(_ sender: Any) {
@@ -62,6 +66,22 @@ class FeedTableViewCell: UITableViewCell {
             dislikeButtonOutlet.setImage(UIImage(systemName: "hand.thumbsdown.fill"), for: UIControl.State.normal)
             likeButtonOutlet.setImage(UIImage(systemName: "hand.thumbsup"), for: UIControl.State.normal)
             isDisliked = true
+        }
+    }
+    
+    @IBAction func commentAction(_ sender: Any) {
+        self.delegate?.openCommentSection()
+    }
+    
+    @IBAction func viewMoreAction(_ sender: Any) {
+        if isViewMore {
+            isViewMore = false
+            viewMoreOutlet.setTitle("View Less", for: .normal)
+            self.postDelegate?.toggleHeight(newHeight: 580)
+        } else {
+            isViewMore = true
+            viewMoreOutlet.setTitle("View More", for: .normal)
+            self.postDelegate?.toggleHeight(newHeight: 530)
         }
     }
     

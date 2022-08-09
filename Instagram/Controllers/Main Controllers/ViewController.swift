@@ -26,6 +26,9 @@ class ViewController: UIViewController {
     }
     
     @IBAction func signUpAction(_ sender: Any) {
+        if let registrationViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "RegistrationViewController") as? RegistrationViewController {
+            navigationController?.pushViewController(registrationViewController, animated: true)
+        }
     }
     
     // MARK: - Functions
@@ -40,7 +43,5 @@ class ViewController: UIViewController {
         signUpOutlet.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16.0)
         
     }
-
-
 }
 

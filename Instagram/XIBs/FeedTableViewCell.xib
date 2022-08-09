@@ -45,6 +45,9 @@
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YbO-Du-EvR">
                         <rect key="frame" x="10" y="445.5" width="73" height="30"/>
                         <state key="normal" title="View More"/>
+                        <connections>
+                            <action selector="viewMoreAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="4AP-l4-XZV"/>
+                        </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wan-el-0hQ">
                         <rect key="frame" x="10" y="485.5" width="21" height="22"/>
@@ -66,6 +69,9 @@
                         <rect key="frame" x="72" y="485.5" width="22" height="22"/>
                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <state key="normal" image="message" catalog="system"/>
+                        <connections>
+                            <action selector="commentAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="jl2-Kp-XeW"/>
+                        </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0ac-eE-hrD">
                         <rect key="frame" x="104" y="485.5" width="21" height="22"/>
@@ -142,6 +148,7 @@
                 <outlet property="shareButtonOutlet" destination="0ac-eE-hrD" id="N0k-fQ-z6V"/>
                 <outlet property="userName" destination="9Jo-B5-Zmq" id="4Gb-bZ-oLZ"/>
                 <outlet property="videoLayer" destination="ZMI-B5-Svx" id="Tm9-fB-wlQ"/>
+                <outlet property="viewMoreOutlet" destination="YbO-Du-EvR" id="btc-f1-MHx"/>
             </connections>
             <point key="canvasLocation" x="216.66666666666669" y="233.03571428571428"/>
         </tableViewCell>

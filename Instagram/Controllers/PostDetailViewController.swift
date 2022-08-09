@@ -1,14 +1,16 @@
 //
-//  NotificationViewController.swift
+//  PostDetailViewController.swift
 //  Instagram
 //
-//  Created by Adarsh Pandey on 04/08/22.
+//  Created by Adarsh Pandey on 08/08/22.
 //
 
 import UIKit
 
-class NotificationViewController: UIViewController {
+class PostDetailViewController: UIViewController {
 
+    var recievedModel: PostModel?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

@@ -7,7 +7,9 @@
 
 import UIKit
 
-class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITableViewDelegate, UITableViewDataSource {
+class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITableViewDelegate, UITableViewDataSource, CommentsDelegate, PostDetailDelegate {
+    
+    var tableRowHeight: Double?
     
     // MARK: - Outlets
     
@@ -45,6 +47,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         feedTableView.delegate = self
         feedTableView.dataSource = self
+        
+        feedTableView.rowHeight = UITableView.automaticDimension
+        feedTableView.estimatedRowHeight = 50
     }
     
     func registerCustomViewInCell() {
@@ -54,6 +59,19 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let newNib = UINib(nibName: "FeedTableViewCell", bundle: nil)
         feedTableView.register(newNib, forCellReuseIdentifier: feedKCellIdentifier)
     }
+    
+    func openCommentSection() {
+        let commentViewController = self.storyboard?.instantiateViewController(withIdentifier: "CommentViewController") as! CommentViewController
+        self.present(commentViewController, animated: true, completion: nil)
+    }
+    
+    func toggleHeight(newHeight: Double) {
+        print(#function)
+        tableRowHeight = newHeight
+        //tableView(feedTableView, heightForRowAt: IndexPath.init(arrayLiteral: postModel.count))
+        //self.feedTableView.reloadRows(at: [postModel], with: .none)
+    }
+    
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -104,6 +122,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         return 10.0
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let storyViewController = self.storyboard?.instantiateViewController(withIdentifier: "StoryViewController") as! StoryViewController
+        self.present(storyViewController, animated: true, completion: nil)
+    }
+    
 //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        if let secondScreenController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "SecondScreenController") as? SecondScreenController {
 //
@@ -133,6 +156,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             print("Failed to create the custom cell")
             return UITableViewCell()
         }
+        
+        cell.delegate = self
+        cell.postDelegate = self
         
         let data = postModel[indexPath.row]
         
@@ -175,7 +201,12 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if postModel[indexPath.row].imageURL != nil || postModel[indexPath.row].videoURL != nil {
-            return 530;
+            if let tableRowHeight = self.tableRowHeight {
+                print("here")
+                return CGFloat(tableRowHeight)
+            } else {
+                return 530
+            }
         } else {
             return 230;
         }
