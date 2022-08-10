@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate, CheckValidation {
 
     // MARK: - Outlets
     
@@ -17,11 +17,19 @@ class ViewController: UIViewController {
     @IBOutlet var loginOutlet: UIButton!
     @IBOutlet var signUpOutlet: UIButton!
     
+    // MARK: - Variables
+    
+    let loginAPI = LoginAPI()
+    var loggedInUser: UserModel?
+    var token: String?
+    
     // MARK: - Actions
     
     @IBAction func loginAction(_ sender: Any) {
-        if let mainTabViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "MainTabViewController") as? MainTabViewController {
-            navigationController?.pushViewController(mainTabViewController, animated: true)
+        if let user = usernameField.text, let password = passwordField.text {
+            loginAPI.postLogInData(id: user, password: password)
+        } else {
+            print("Either username or password is nil")
         }
     }
     
@@ -39,9 +47,47 @@ class ViewController: UIViewController {
         loginOutlet.layer.masksToBounds = true
         loginOutlet.layer.cornerRadius = 8.0
         loginOutlet.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16.0)
-        
         signUpOutlet.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16.0)
+        loginAPI.delegate = self
+        usernameField.delegate = self
+        passwordField.delegate = self
+        passwordField.isSecureTextEntry = true
         
+        usernameField.text = "adarsh@google.com"
+        passwordField.text = "Adarsh@1"
+    }
+    
+    func sendToken(token: String) {
+        DispatchQueue.main.async {
+            self.token = token
+        }
+    }
+    
+    func sendStatus(status: Bool) {
+        DispatchQueue.main.async {
+            if status, let mainTabViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "MainTabViewController") as? MainTabViewController {
+                
+//                productViewController.id = self.loggedInUser?.id
+//                productViewController.email = self.loggedInUser?.emailId
+//                productViewController.name = self.loggedInUser?.name
+//                productViewController.phoneNumber = self.loggedInUser?.mobileNumber
+                self.navigationController?.pushViewController(mainTabViewController, animated: true)
+            } else {
+                let alert = UIAlertController(title: "Alert!", message: "Email or Password you entered is incorrect", preferredStyle: UIAlertController.Style.alert)
+
+                // add an action (button)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+
+                // show the alert
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    func sendUser(user: UserModel) {
+        DispatchQueue.main.async {
+            self.loggedInUser = user
+        }
     }
 }
 

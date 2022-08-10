@@ -24,6 +24,9 @@
 		75801289289E858C003BF69B /* splachScreen.gif in Resources */ = {isa = PBXBuildFile; fileRef = 75801288289E858C003BF69B /* splachScreen.gif */; };
 		759E45AC28A2624F00671B46 /* LoginAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759E45AB28A2624F00671B46 /* LoginAPI.swift */; };
 		759E45B128A2626000671B46 /* SignUpAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759E45B028A2626000671B46 /* SignUpAPI.swift */; };
+		759E45B628A287E600671B46 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759E45B528A287E600671B46 /* UserModel.swift */; };
+		759E45BB28A2CF4900671B46 /* FeedAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759E45BA28A2CF4900671B46 /* FeedAPI.swift */; };
+		759E45C028A2D29D00671B46 /* AddStoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759E45BF28A2D29D00671B46 /* AddStoryViewController.swift */; };
 		75F48C39289B9167005AFE9F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F48C38289B9167005AFE9F /* AppDelegate.swift */; };
 		75F48C3B289B9167005AFE9F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F48C3A289B9167005AFE9F /* SceneDelegate.swift */; };
 		75F48C3D289B9167005AFE9F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F48C3C289B9167005AFE9F /* ViewController.swift */; };
@@ -77,6 +80,9 @@
 		75801288289E858C003BF69B /* splachScreen.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = splachScreen.gif; sourceTree = "<group>"; };
 		759E45AB28A2624F00671B46 /* LoginAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAPI.swift; sourceTree = "<group>"; };
 		759E45B028A2626000671B46 /* SignUpAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpAPI.swift; sourceTree = "<group>"; };
+		759E45B528A287E600671B46 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		759E45BA28A2CF4900671B46 /* FeedAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedAPI.swift; sourceTree = "<group>"; };
+		759E45BF28A2D29D00671B46 /* AddStoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStoryViewController.swift; sourceTree = "<group>"; };
 		75F48C35289B9167005AFE9F /* Instagram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Instagram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75F48C38289B9167005AFE9F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		75F48C3A289B9167005AFE9F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -139,6 +145,7 @@
 			children = (
 				75801280289E4171003BF69B /* PostModel.swift */,
 				751BB78328A154FE002D24AF /* CommentModel.swift */,
+				759E45B528A287E600671B46 /* UserModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -148,6 +155,7 @@
 			children = (
 				759E45AB28A2624F00671B46 /* LoginAPI.swift */,
 				759E45B028A2626000671B46 /* SignUpAPI.swift */,
+				759E45BA28A2CF4900671B46 /* FeedAPI.swift */,
 			);
 			path = APICallers;
 			sourceTree = "<group>";
@@ -227,6 +235,7 @@
 				751BB76B28A136B7002D24AF /* CommentViewController.swift */,
 				751BB77028A136C2002D24AF /* StoryViewController.swift */,
 				751BB77528A136D0002D24AF /* PostDetailViewController.swift */,
+				759E45BF28A2D29D00671B46 /* AddStoryViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -393,14 +402,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				759E45BB28A2CF4900671B46 /* FeedAPI.swift in Sources */,
 				751BB77128A136C2002D24AF /* StoryViewController.swift in Sources */,
 				75F48C3D289B9167005AFE9F /* ViewController.swift in Sources */,
 				759E45B128A2626000671B46 /* SignUpAPI.swift in Sources */,
 				75F48C84289BA9D6005AFE9F /* SearchViewController.swift in Sources */,
 				75F48CA5289BCAF7005AFE9F /* StoryCollectionViewCell.swift in Sources */,
 				751BB78428A154FE002D24AF /* CommentModel.swift in Sources */,
+				759E45C028A2D29D00671B46 /* AddStoryViewController.swift in Sources */,
 				75801281289E4171003BF69B /* PostModel.swift in Sources */,
 				756C8867289E862000DCFB15 /* GifExtension.swift in Sources */,
+				759E45B628A287E600671B46 /* UserModel.swift in Sources */,
 				75F48C93289BAA05005AFE9F /* ProfileViewController.swift in Sources */,
 				75F48C39289B9167005AFE9F /* AppDelegate.swift in Sources */,
 				75801272289E3F29003BF69B /* FeedTableViewCell.swift in Sources */,

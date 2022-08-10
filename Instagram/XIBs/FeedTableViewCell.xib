@@ -4,7 +4,6 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -29,7 +28,7 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cfl-Ln-jM7">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="post_pic" translatesAutoresizingMaskIntoConstraints="NO" id="cfl-Ln-jM7">
                         <rect key="frame" x="0.0" y="64.5" width="557" height="300"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="300" id="iQT-O5-yeD"/>
@@ -78,32 +77,6 @@
                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <state key="normal" image="paperplane" catalog="system"/>
                     </button>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZMI-B5-Svx" userLabel="Video Player">
-                        <rect key="frame" x="0.0" y="64.5" width="557" height="300"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v5W-7K-rOW" userLabel="Player">
-                                <rect key="frame" x="0.0" y="10" width="547" height="260"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AnV-Z2-9Wv" userLabel="Pause Play">
-                                <rect key="frame" x="10" y="280" width="15" height="19"/>
-                                <state key="normal" image="play.fill" catalog="system"/>
-                                <connections>
-                                    <action selector="playPauseAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Rut-cp-qyp"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="v5W-7K-rOW" firstAttribute="top" secondItem="ZMI-B5-Svx" secondAttribute="top" constant="10" id="6SK-T8-sQr"/>
-                            <constraint firstAttribute="bottom" secondItem="AnV-Z2-9Wv" secondAttribute="bottom" constant="1" id="NiL-XQ-m9x"/>
-                            <constraint firstItem="AnV-Z2-9Wv" firstAttribute="top" secondItem="v5W-7K-rOW" secondAttribute="bottom" constant="10" id="baa-2k-tyT"/>
-                            <constraint firstItem="AnV-Z2-9Wv" firstAttribute="leading" secondItem="ZMI-B5-Svx" secondAttribute="leading" constant="10" id="gtY-3m-9RO"/>
-                            <constraint firstAttribute="trailing" secondItem="v5W-7K-rOW" secondAttribute="trailing" constant="10" id="vtl-i5-fk3"/>
-                            <constraint firstAttribute="bottom" secondItem="v5W-7K-rOW" secondAttribute="bottom" constant="30" id="wOo-DB-87Q"/>
-                            <constraint firstItem="v5W-7K-rOW" firstAttribute="leading" secondItem="ZMI-B5-Svx" secondAttribute="leading" id="zmK-Bd-mNn"/>
-                        </constraints>
-                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="yk0-jN-rFg" firstAttribute="leading" secondItem="zj2-2B-oss" secondAttribute="trailing" constant="10" id="2bs-Gw-IE3"/>
@@ -117,7 +90,6 @@
                     <constraint firstItem="aot-iT-QE8" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.08" id="FfS-do-4JL"/>
                     <constraint firstItem="aot-iT-QE8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="ISS-ta-nAG"/>
                     <constraint firstItem="Wan-el-0hQ" firstAttribute="leading" secondItem="YbO-Du-EvR" secondAttribute="leading" id="Loj-1H-lfV"/>
-                    <constraint firstItem="ZMI-B5-Svx" firstAttribute="trailing" secondItem="cfl-Ln-jM7" secondAttribute="trailing" id="Rbg-RZ-QUl"/>
                     <constraint firstItem="0ac-eE-hrD" firstAttribute="centerY" secondItem="yk0-jN-rFg" secondAttribute="centerY" id="TGm-v3-rse"/>
                     <constraint firstItem="qmi-TZ-CM8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="Xjk-Nz-xOg"/>
                     <constraint firstItem="cfl-Ln-jM7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="YRe-13-vcr"/>
@@ -126,9 +98,6 @@
                     <constraint firstItem="9Jo-B5-Zmq" firstAttribute="centerY" secondItem="aot-iT-QE8" secondAttribute="centerY" id="cfx-Tx-qMn"/>
                     <constraint firstItem="9Jo-B5-Zmq" firstAttribute="leading" secondItem="aot-iT-QE8" secondAttribute="trailing" constant="10" id="fF8-LB-1dO"/>
                     <constraint firstAttribute="trailing" secondItem="9Jo-B5-Zmq" secondAttribute="trailing" constant="10" id="g4k-9Z-GbB"/>
-                    <constraint firstItem="ZMI-B5-Svx" firstAttribute="top" secondItem="cfl-Ln-jM7" secondAttribute="top" id="kOM-aS-Iwn"/>
-                    <constraint firstItem="ZMI-B5-Svx" firstAttribute="leading" secondItem="cfl-Ln-jM7" secondAttribute="leading" id="llc-vr-fUn"/>
-                    <constraint firstItem="ZMI-B5-Svx" firstAttribute="bottom" secondItem="cfl-Ln-jM7" secondAttribute="bottom" id="pmA-D6-K1C"/>
                     <constraint firstItem="aot-iT-QE8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="rPx-oH-yZK"/>
                     <constraint firstItem="0ac-eE-hrD" firstAttribute="leading" secondItem="yk0-jN-rFg" secondAttribute="trailing" constant="10" id="v72-N9-II6"/>
                     <constraint firstItem="YbO-Du-EvR" firstAttribute="leading" secondItem="qmi-TZ-CM8" secondAttribute="leading" id="voS-HK-QXA"/>
@@ -141,13 +110,10 @@
                 <outlet property="dislikeButtonOutlet" destination="zj2-2B-oss" id="dvW-hM-Hdj"/>
                 <outlet property="imageHeightConstraint" destination="iQT-O5-yeD" id="ZNs-M2-in1"/>
                 <outlet property="likeButtonOutlet" destination="Wan-el-0hQ" id="d1b-LB-bgW"/>
-                <outlet property="playPause" destination="AnV-Z2-9Wv" id="JH6-Eb-Xna"/>
-                <outlet property="player" destination="v5W-7K-rOW" id="R6O-n1-6Ss"/>
                 <outlet property="postImage" destination="cfl-Ln-jM7" id="893-uo-qwj"/>
                 <outlet property="profilePic" destination="aot-iT-QE8" id="yQi-Ty-Kgl"/>
                 <outlet property="shareButtonOutlet" destination="0ac-eE-hrD" id="N0k-fQ-z6V"/>
                 <outlet property="userName" destination="9Jo-B5-Zmq" id="4Gb-bZ-oLZ"/>
-                <outlet property="videoLayer" destination="ZMI-B5-Svx" id="Tm9-fB-wlQ"/>
                 <outlet property="viewMoreOutlet" destination="YbO-Du-EvR" id="btc-f1-MHx"/>
             </connections>
             <point key="canvasLocation" x="216.66666666666669" y="233.03571428571428"/>
@@ -158,10 +124,7 @@
         <image name="hand.thumbsup" catalog="system" width="128" height="128"/>
         <image name="message" catalog="system" width="128" height="113"/>
         <image name="paperplane" catalog="system" width="128" height="118"/>
-        <image name="play.fill" catalog="system" width="116" height="128"/>
+        <image name="post_pic" width="4032" height="3024"/>
         <image name="profile_pic" width="1000" height="667"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>

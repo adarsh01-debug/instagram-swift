@@ -7,11 +7,7 @@
 
 import UIKit
 
-class RegistrationViewController: UIViewController {
-    
-    var genderResult: String?
-    var accountTypeResult: String?
-    var interestsResult: [String] = []
+class RegistrationViewController: UIViewController, UITextFieldDelegate, Response {
 
     @IBOutlet var name: UITextField!
     @IBOutlet var email: UITextField!
@@ -39,6 +35,11 @@ class RegistrationViewController: UIViewController {
     @IBOutlet var gamingCheckBox: UIButton!
     @IBOutlet var gamingLabel: UILabel!
     @IBOutlet var signUpOutlet: UIButton!
+    
+    let signup = SignUpAPI()
+    var genderResult: String?
+    var accountTypeResult: String?
+    var interestsResult: [String] = []
     
     
     @IBAction func genderAction(_ sender: Any) {
@@ -172,7 +173,25 @@ class RegistrationViewController: UIViewController {
     
     
     @IBAction func signUpAction(_ sender: Any) {
-        
+        if let name = name.text, let email = email.text, let password = password.text, let phone = phoneNumber.text, let gender = genderResult, let accountType = accountTypeResult {
+            if validate(name: name, email: email, password: password, phone: phone) {
+                // post request to the database
+                signup.postSignInData(name: name, id: email, password: password, mobileNumber: phone, gender: gender, accountType: accountType, interests: interestsResult)
+                
+                // navigate back to login page
+                navigationController?.popViewController(animated: true)
+            } else {
+                let alert = UIAlertController(title: "Alert!", message: "Fields are either empty or incorrect", preferredStyle: UIAlertController.Style.alert)
+
+                // add an action (button)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+
+                // show the alert
+                self.present(alert, animated: true, completion: nil)
+            }
+        } else {
+            print("Nil values are being returned")
+        }
     }
     
     override func viewDidLoad() {
@@ -196,6 +215,59 @@ class RegistrationViewController: UIViewController {
         signUpOutlet.layer.masksToBounds = true
         signUpOutlet.layer.cornerRadius = 8.0
         signUpOutlet.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16.0)
+        
+        
+        signup.delegate = self
+        
+        name.delegate = self
+        email.delegate = self
+        phoneNumber.delegate = self
+        password.delegate = self
+        password.isSecureTextEntry = true
+        name.becomeFirstResponder()
+    }
+    
+    func sendUserInfo(user: UserModel) {
+        print("User Registered")
+    }
+    
+    func sendStatus(status: Bool) {
+        print(status)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func validate(name: String , email: String, password: String, phone: String) -> Bool {
+        if name == "" || email == "" || password == "" || phone == "" || genderResult == nil || accountTypeResult == nil {
+            return false
+        }
+        
+        if isValidEmail(email), isValidPassword(password: password) {
+            return true
+        }
+        
+        return false
+    }
+    
+    func isValidEmail(_ email: String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
+
+        return NSPredicate(format:"SELF MATCHES %@", emailRegEx).evaluate(with: email)
+    }
+    
+    func isValidPassword (password: String) -> Bool {
+        let passwordRegEx = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[d$@$!%*?&#])[A-Za-z\\dd$@$!%*?&#]{8,}"
+        
+        let passwordValid = NSPredicate(format:"SELF MATCHES %@", passwordRegEx).evaluate(with: password)
+        
+        if passwordValid {
+            return true
+        }
+        
+        return false
     }
 
 }

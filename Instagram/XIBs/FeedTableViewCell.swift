@@ -15,7 +15,7 @@ class FeedTableViewCell: UITableViewCell {
     var isLiked: Bool = false
     var isDisliked: Bool = false
     var isViewMore: Bool = true
-    var url: String?
+    //var url: String?
     var delegate: CommentsDelegate?
     var postDelegate: PostDetailDelegate?
 
@@ -29,23 +29,23 @@ class FeedTableViewCell: UITableViewCell {
     @IBOutlet var commentButtonOutlet: UIButton!
     @IBOutlet var shareButtonOutlet: UIButton!
     @IBOutlet var imageHeightConstraint: NSLayoutConstraint!
-    @IBOutlet var videoLayer: UIView!
-    @IBOutlet var player: UIView!
-    @IBOutlet var playPause: UIButton!
+//    @IBOutlet var videoLayer: UIView!
+//    @IBOutlet var player: UIView!
+//    @IBOutlet var playPause: UIButton!
     @IBOutlet var viewMoreOutlet: UIButton!
     
     // MARK: - Actions
-    @IBAction func playPauseAction(_ sender: Any) {
-        if isPaused {
-            self.avPLayer?.play()
-            playPause.setImage(UIImage(systemName: "pause.fill"), for: UIControl.State.normal)
-            isPaused = false
-        } else {
-            self.avPLayer?.pause()
-            playPause.setImage(UIImage(systemName: "play.fill"), for: UIControl.State.normal)
-            isPaused = true
-        }
-    }
+//    @IBAction func playPauseAction(_ sender: Any) {
+//        if isPaused {
+//            self.avPLayer?.play()
+//            playPause.setImage(UIImage(systemName: "pause.fill"), for: UIControl.State.normal)
+//            isPaused = false
+//        } else {
+//            self.avPLayer?.pause()
+//            playPause.setImage(UIImage(systemName: "play.fill"), for: UIControl.State.normal)
+//            isPaused = true
+//        }
+//    }
     
     @IBAction func likeButtonAction(_ sender: Any) {
         if isLiked {
@@ -94,13 +94,13 @@ class FeedTableViewCell: UITableViewCell {
         userName.font = UIFont.boldSystemFont(ofSize: 16.0)
         //let url = URL(string: "https://content.jwplatform.com/manifests/vM7nH0Kl.m3u8")!
         
-        if let url = self.url {
-            print(url)
-            self.avPLayer = AVPlayer(playerItem: AVPlayerItem(url: URL(string: url)!))
-            let avPlayerLayer = AVPlayerLayer(player: avPLayer)
-            avPlayerLayer.frame = player.bounds
-            player.layer.insertSublayer(avPlayerLayer, at: 0)
-        }
+//        if let url = self.url {
+//            print(url)
+//            self.avPLayer = AVPlayer(playerItem: AVPlayerItem(url: URL(string: url)!))
+//            let avPlayerLayer = AVPlayerLayer(player: avPLayer)
+//            avPlayerLayer.frame = player.bounds
+//            player.layer.insertSublayer(avPlayerLayer, at: 0)
+//        }
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

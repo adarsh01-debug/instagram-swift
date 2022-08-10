@@ -15,6 +15,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     @IBOutlet var storyCollectionView: UICollectionView!
     @IBOutlet var feedTableView: UITableView!
+    @IBOutlet var addStoryOutlet: UIButton!
     
     
     // MARK: - Variables
@@ -33,6 +34,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         PostModel(profilePic: "https://images.unsplash.com/photo-1492528491602-a42e1caf03ad?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80", username: "bored_now", imageURL: nil, videoURL: "https://content.jwplatform.com/manifests/vM7nH0Kl.m3u8", caption: nil)
     ]
     
+    // MARK: - Actions
+    
+    @IBAction func addStoryAction(_ sender: Any) {
+        
+    }
     
     // MARK: - Functions
     
@@ -41,15 +47,18 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
 
         // Do any additional setup after loading the view.
         registerCustomViewInCell()
-        
         storyCollectionView.delegate = self
         storyCollectionView.dataSource = self
-        
         feedTableView.delegate = self
         feedTableView.dataSource = self
-        
         feedTableView.rowHeight = UITableView.automaticDimension
         feedTableView.estimatedRowHeight = 50
+        
+        addStoryOutlet.layer.borderWidth = 0.5
+        addStoryOutlet.layer.masksToBounds = false
+        addStoryOutlet.layer.borderColor = UIColor.gray.cgColor
+        addStoryOutlet.layer.cornerRadius = addStoryOutlet.frame.height / 2
+        addStoryOutlet.clipsToBounds = true
     }
     
     func registerCustomViewInCell() {
@@ -68,8 +77,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func toggleHeight(newHeight: Double) {
         print(#function)
         tableRowHeight = newHeight
-        //tableView(feedTableView, heightForRowAt: IndexPath.init(arrayLiteral: postModel.count))
-        //self.feedTableView.reloadRows(at: [postModel], with: .none)
     }
     
     
@@ -126,22 +133,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let storyViewController = self.storyboard?.instantiateViewController(withIdentifier: "StoryViewController") as! StoryViewController
         self.present(storyViewController, animated: true, completion: nil)
     }
-    
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        if let secondScreenController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "SecondScreenController") as? SecondScreenController {
-//
-//            secondScreenController.titleLabel = brandData?[indexPath.row].name
-//            secondScreenController.priceLabel = brandData?[indexPath.row].price
-//            secondScreenController.productTypeLabel = brandData?[indexPath.row].productType
-//            secondScreenController.descriptionLabel = brandData?[indexPath.row].welcomeDescription
-//            secondScreenController.urlLabel = brandData?[indexPath.row].imageLink
-//            secondScreenController.rating = brandData?[indexPath.row].rating
-//            secondScreenController.shades = brandData?[indexPath.row].productColours
-//            navigationController?.pushViewController(secondScreenController, animated: true)
-//        } else {
-//            print("Error getitng detail view controller")
-//        }
-//    }
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -176,37 +167,21 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         cell.userName.text = data.username
         
-        if let postImage = data.imageURL, data.videoURL == nil {
+        if let postImage = data.imageURL {
             cell.postImage.load(url: URL(string: postImage)!)
             cell.postImage.contentMode = .scaleToFill
-            cell.videoLayer.isHidden = true
+            //cell.videoLayer.isHidden = true
         }
         
-        if let videoUrl = data.videoURL, data.imageURL == nil {
-            cell.url = videoUrl
-            cell.imageView?.isHidden = true
-            cell.videoLayer.isHidden = false
-        }
-        
-        if data.imageURL == nil, data.videoURL == nil {
-            cell.imageView?.isHidden = true
-            cell.videoLayer.isHidden = true
-        }
-        
-        //cell.caption.text = data.caption
+//        cell.caption.text = data.caption
         
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if postModel[indexPath.row].imageURL != nil || postModel[indexPath.row].videoURL != nil {
-            if let tableRowHeight = self.tableRowHeight {
-                print("here")
-                return CGFloat(tableRowHeight)
-            } else {
-                return 530
-            }
+        if postModel[indexPath.row].imageURL != nil {
+            return 530
         } else {
             return 230;
         }
