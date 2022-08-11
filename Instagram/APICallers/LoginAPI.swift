@@ -20,7 +20,6 @@ class LoginAPI {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        print(id, password)
         let body: [String: AnyHashable] = [
             "email": id,
             "password": password,
@@ -34,14 +33,14 @@ class LoginAPI {
             }
             let header = response as! HTTPURLResponse
             //print(header.allHeaderFields["token"])
-            if let safeData = data{
+            if let safeData = data {
                 print("no error")
-                if let convertedData = self.parseJSON(safeData){
+                if let convertedData = self.parseJSON(safeData) {
                     //sending the recieved status to view controller
                     if let token = header.allHeaderFields["token"] {
-                        self.delegate?.sendStatus(status: true)
                         self.delegate?.sendUser(user: convertedData)
                         self.delegate?.sendToken(token: String(describing: token))
+                        self.delegate?.sendStatus(status: true)
                     } else {
                         self.delegate?.sendStatus(status: false)
                     }

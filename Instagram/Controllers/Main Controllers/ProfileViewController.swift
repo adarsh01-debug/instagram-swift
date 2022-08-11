@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UserPostsDelegate {
 
     // MARK: - Outlets
     
@@ -21,6 +21,12 @@ class ProfileViewController: UIViewController {
     @IBOutlet var postsCollectionView: UICollectionView!
     
     
+    // MARK: - Variables
+    
+    var loggedInUser: UserModel?
+    var userId: String?
+    var getUserPostsAPI = GetUserPostsAPI()
+    var postModel: [PostModel]?
     
     // MARK: - functions
     
@@ -28,6 +34,7 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        registerCustomViewInCell()
         numberOfPosts.font = UIFont.boldSystemFont(ofSize: 18.0)
         numberOfFollowers.font = UIFont.boldSystemFont(ofSize: 18.0)
         numberOfFollowing.font = UIFont.boldSystemFont(ofSize: 18.0)
@@ -44,7 +51,62 @@ class ProfileViewController: UIViewController {
         profilePic.layer.borderColor = UIColor.gray.cgColor
         profilePic.layer.cornerRadius = profilePic.frame.height / 2
         profilePic.clipsToBounds = true
-        
+        getUserPostsAPI.delegate = self
+        getUserPostsAPI.fecthUserPostsDetails(userId!)
+    }
+    
+    func registerCustomViewInCell() {
+        let nib = UINib(nibName: "ProfilePostCollectionViewCell", bundle: nil)
+        postsCollectionView.register(nib, forCellWithReuseIdentifier: "ProfilePostCollectionViewCell")
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if collectionView == postsCollectionView {
+            return 10
+        }
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if collectionView == postsCollectionView {
+            guard let cell = postsCollectionView.dequeueReusableCell(withReuseIdentifier: "ProfilePostCollectionViewCell", for: indexPath) as? ProfilePostCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            
+            // Configure the cell
+            if postModel != nil {
+                print("postURL", postModel?[indexPath.row].postURL)
+                cell.postImage.load(url: URL(string: (postModel?[indexPath.row].postURL)!)!)
+            }
+            
+            //cell.postImage.image
+            return cell
+        } else {
+            return UICollectionViewCell()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: postsCollectionView.bounds.height, height: postsCollectionView.bounds.height)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 10.0
+    }
+    
+    func getUserPosts(posts: [PostModel]) {
+        DispatchQueue.main.async {
+            print(posts)
+            self.postModel = posts
+        }
     }
 
 }

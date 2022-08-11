@@ -18,10 +18,22 @@ protocol CheckValidation: AnyObject {
     func sendUser (user : UserModel)
 }
 
+protocol PostManagerDelegate: AnyObject {
+    func updatedData(postData: [PostModel])
+}
+
+protocol UserIdDelegate: AnyObject {
+    func getUserId(userId: String)
+}
+
 protocol CommentsDelegate: AnyObject {
     func openCommentSection()
 }
 
 protocol PostDetailDelegate: AnyObject {
     func toggleHeight(newHeight: Double)
+}
+
+protocol UserPostsDelegate: AnyObject {
+    func getUserPosts(posts: [PostModel])
 }

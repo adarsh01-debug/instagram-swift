@@ -7,9 +7,7 @@
 
 import UIKit
 
-class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITableViewDelegate, UITableViewDataSource, CommentsDelegate, PostDetailDelegate {
-    
-    var tableRowHeight: Double?
+class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITableViewDelegate, UITableViewDataSource, CommentsDelegate, PostDetailDelegate, PostManagerDelegate {
     
     // MARK: - Outlets
     
@@ -22,17 +20,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     let storyKCellIdentifier = "StoryCollectionViewCell"
     let feedKCellIdentifier = "FeedTableViewCell"
-    
-    let postModel: [PostModel] = [
-        PostModel(profilePic: "https://images.unsplash.com/photo-1492528491602-a42e1caf03ad?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80", username: "adarsh.not.found", imageURL: "https://i0.wp.com/the-shooting-star.com/wp-content/uploads/2020/03/travel-advice-coronavirus-1.jpg?w=2520&ssl=1", videoURL: nil, caption: nil),
-        PostModel(profilePic: "https://images.unsplash.com/photo-1492528491602-a42e1caf03ad?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80", username: "jhonny.test", imageURL: "https://i0.wp.com/the-shooting-star.com/wp-content/uploads/2020/03/travel-advice-coronavirus-1.jpg?w=2520&ssl=1", videoURL: nil, caption: nil),
-        PostModel(profilePic: "https://images.unsplash.com/photo-1492528491602-a42e1caf03ad?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80", username: "whats_in_a_name", imageURL: nil, videoURL: nil, caption: nil),
-        PostModel(profilePic: "https://images.unsplash.com/photo-1492528491602-a42e1caf03ad?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80", username: "who_am_i", imageURL: nil, videoURL: "https://content.jwplatform.com/manifests/vM7nH0Kl.m3u8", caption: nil),
-        PostModel(profilePic: nil, username: "lmao.rofl", imageURL: "https://i0.wp.com/the-shooting-star.com/wp-content/uploads/2020/03/travel-advice-coronavirus-1.jpg?w=2520&ssl=1", videoURL: nil, caption: nil),
-        PostModel(profilePic: "https://images.unsplash.com/photo-1492528491602-a42e1caf03ad?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80", username: "say_my_name", imageURL: nil, videoURL: "https://content.jwplatform.com/manifests/vM7nH0Kl.m3u8", caption: nil),
-        PostModel(profilePic: "https://images.unsplash.com/photo-1492528491602-a42e1caf03ad?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80", username: "idk.idc", imageURL: "https://i0.wp.com/the-shooting-star.com/wp-content/uploads/2020/03/travel-advice-coronavirus-1.jpg?w=2520&ssl=1", videoURL: nil, caption: nil),
-        PostModel(profilePic: "https://images.unsplash.com/photo-1492528491602-a42e1caf03ad?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80", username: "bored_now", imageURL: nil, videoURL: "https://content.jwplatform.com/manifests/vM7nH0Kl.m3u8", caption: nil)
-    ]
+    var postData: [PostModel]?
+    let postAPI = FeedAPI()
+    var loggedInUser: UserModel?
+    var tableRowHeight: Double?
+    var userId: String?
     
     // MARK: - Actions
     
@@ -51,14 +43,15 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         storyCollectionView.dataSource = self
         feedTableView.delegate = self
         feedTableView.dataSource = self
+        postAPI.delegate = self
         feedTableView.rowHeight = UITableView.automaticDimension
         feedTableView.estimatedRowHeight = 50
-        
         addStoryOutlet.layer.borderWidth = 0.5
         addStoryOutlet.layer.masksToBounds = false
         addStoryOutlet.layer.borderColor = UIColor.gray.cgColor
         addStoryOutlet.layer.cornerRadius = addStoryOutlet.frame.height / 2
         addStoryOutlet.clipsToBounds = true
+        postAPI.fecthPostDetails()
     }
     
     func registerCustomViewInCell() {
@@ -106,8 +99,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             
             cell.storyName.text = "Adarsh"
             return cell
-        }
-    else {
+        } else {
             return UICollectionViewCell()
         }
     }
@@ -139,7 +131,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return postModel.count
+        if let postData = postData {
+            return postData.count
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -151,39 +146,48 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         cell.delegate = self
         cell.postDelegate = self
         
-        let data = postModel[indexPath.row]
-        
-        cell.profilePic.layer.borderWidth = 0.5
-        cell.profilePic.layer.masksToBounds = false
-        cell.profilePic.layer.borderColor = UIColor.gray.cgColor
-        cell.profilePic.layer.cornerRadius = cell.profilePic.frame.height / 2
-        cell.profilePic.clipsToBounds = true
-        
-        if let profileUrl = data.profilePic {
-            cell.profilePic.load(url: URL(string: profileUrl)!)
-        } else {
+        if let postData = postData {
+            let data = postData[indexPath.row]
+            
+            cell.profilePic.layer.borderWidth = 0.5
+            cell.profilePic.layer.masksToBounds = false
+            cell.profilePic.layer.borderColor = UIColor.gray.cgColor
+            cell.profilePic.layer.cornerRadius = cell.profilePic.frame.height / 2
+            cell.profilePic.clipsToBounds = true
+            
             cell.profilePic.image = UIImage(systemName: "person")
+            cell.userName.text = data.name
+            
+            if let postImage = data.postURL {
+                
+                cell.postImage.load(url: URL(string: postImage)!)
+                cell.postImage.contentMode = .scaleToFill
+            } else {
+                cell.postImage.isHidden = true
+                cell.imageHeightConstraint.constant = 0.0
+            }
+            
+            cell.caption.text = data.caption
+            cell.postId = data.id
+            cell.userId = data.userID
         }
-        
-        cell.userName.text = data.username
-        
-        if let postImage = data.imageURL {
-            cell.postImage.load(url: URL(string: postImage)!)
-            cell.postImage.contentMode = .scaleToFill
-            //cell.videoLayer.isHidden = true
-        }
-        
-//        cell.caption.text = data.caption
-        
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if postModel[indexPath.row].imageURL != nil {
-            return 530
-        } else {
-            return 230;
+        if let postData = postData {
+            if postData[indexPath.row].postURL != nil {
+                return 480
+            }
+        }
+        return 230
+    }
+    
+    func updatedData(postData: [PostModel]) {
+        DispatchQueue.main.async {
+            self.postData = postData
+            self.feedTableView.reloadData()
         }
     }
 }

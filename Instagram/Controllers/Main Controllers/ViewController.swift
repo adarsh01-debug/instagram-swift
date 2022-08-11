@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITextFieldDelegate, CheckValidation {
+class ViewController: UIViewController, UITextFieldDelegate, CheckValidation, UserIdDelegate {
 
     // MARK: - Outlets
     
@@ -22,6 +22,8 @@ class ViewController: UIViewController, UITextFieldDelegate, CheckValidation {
     let loginAPI = LoginAPI()
     var loggedInUser: UserModel?
     var token: String?
+    var userId: String?
+    var loginTemp = LoginTemp()
     
     // MARK: - Actions
     
@@ -55,6 +57,8 @@ class ViewController: UIViewController, UITextFieldDelegate, CheckValidation {
         
         usernameField.text = "adarsh@google.com"
         passwordField.text = "Adarsh@1"
+        
+        loginTemp.delegate = self
     }
     
     func sendToken(token: String) {
@@ -66,11 +70,8 @@ class ViewController: UIViewController, UITextFieldDelegate, CheckValidation {
     func sendStatus(status: Bool) {
         DispatchQueue.main.async {
             if status, let mainTabViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "MainTabViewController") as? MainTabViewController {
-                
-//                productViewController.id = self.loggedInUser?.id
-//                productViewController.email = self.loggedInUser?.emailId
-//                productViewController.name = self.loggedInUser?.name
-//                productViewController.phoneNumber = self.loggedInUser?.mobileNumber
+                mainTabViewController.loggedInUser = self.loggedInUser
+                //mainTabViewController.userId = userId
                 self.navigationController?.pushViewController(mainTabViewController, animated: true)
             } else {
                 let alert = UIAlertController(title: "Alert!", message: "Email or Password you entered is incorrect", preferredStyle: UIAlertController.Style.alert)
@@ -87,6 +88,14 @@ class ViewController: UIViewController, UITextFieldDelegate, CheckValidation {
     func sendUser(user: UserModel) {
         DispatchQueue.main.async {
             self.loggedInUser = user
+            self.loginTemp.fecthUserDetails(email: (self.loggedInUser?.email)!)
+        }
+    }
+    
+    func getUserId(userId: String) {
+        DispatchQueue.main.async {
+            print("userid from view controller ", userId)
+            self.userId = userId
         }
     }
 }

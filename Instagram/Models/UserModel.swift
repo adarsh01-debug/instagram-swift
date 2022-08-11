@@ -13,3 +13,9 @@ struct UserModel: Codable {
     let socialMediaId: Int?
     let interest: [String]?
 }
+
+struct UserId: Codable {
+    let id, name, email, password: String
+    let mobileNumber, gender, accountType: String
+    let interests: [String]
+}

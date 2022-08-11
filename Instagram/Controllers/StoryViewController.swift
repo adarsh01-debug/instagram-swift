@@ -9,6 +9,8 @@ import UIKit
 
 class StoryViewController: UIViewController {
 
+    @IBOutlet var storyImage: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

@@ -1,0 +1,16 @@
+PODS:
+  - MultipartForm (0.1.0)
+
+DEPENDENCIES:
+  - MultipartForm
+
+SPEC REPOS:
+  trunk:
+    - MultipartForm
+
+SPEC CHECKSUMS:
+  MultipartForm: 170d4f653b833cab5b5e99dfdefe71069d913bd1
+
+PODFILE CHECKSUM: f833fc7d7abf032c732aa06da9da45e0dde33516
+
+COCOAPODS: 1.8.4
