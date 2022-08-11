@@ -25,6 +25,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     var loggedInUser: UserModel?
     var userId: String?
+    var userNamee: String?
     var getUserPostsAPI = GetUserPostsAPI()
     var postModel: [PostModel]?
     
@@ -53,6 +54,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         profilePic.clipsToBounds = true
         getUserPostsAPI.delegate = self
         getUserPostsAPI.fecthUserPostsDetails(userId!)
+        userName.text = userNamee
     }
     
     func registerCustomViewInCell() {
@@ -79,7 +81,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
             
             // Configure the cell
             if postModel != nil {
-                print("postURL", postModel?[indexPath.row].postURL)
+                //print("postURL", postModel?[indexPath.row].postURL)
                 cell.postImage.load(url: URL(string: (postModel?[indexPath.row].postURL)!)!)
             }
             
@@ -104,7 +106,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     func getUserPosts(posts: [PostModel]) {
         DispatchQueue.main.async {
-            print(posts)
             self.postModel = posts
         }
     }

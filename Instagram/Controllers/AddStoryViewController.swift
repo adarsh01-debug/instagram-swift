@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import MultipartForm
+import FirebaseStorage
 
 class AddStoryViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -18,10 +18,12 @@ class AddStoryViewController: UIViewController, UIImagePickerControllerDelegate,
     
     // MARK: - Variables
     
+    let storageRef = Storage.storage().reference()
     var isImageSelected: Bool = false
     var loggedInUser: UserModel?
     var userId: String?
     var loginTemp = LoginTemp()
+    var imageUrl: String?
     
     // MARK: - Actions
     
@@ -39,30 +41,36 @@ class AddStoryViewController: UIViewController, UIImagePickerControllerDelegate,
     
     @IBAction func shareButtonAction(_ sender: Any) {
         if isImageSelected {
-            if let imageData = self.storyImage.image?.jpegData(compressionQuality: 0.7), let loggedInUser = self.loggedInUser, let userId = self.userId {
-                let form = MultipartForm(parts: [
-                    MultipartForm.Part(name: "file", data: imageData, filename: "image_from_ios.png", contentType: "image/png"),
-                    MultipartForm.Part(name: "date", value: Date.getCurrentDate()),
-                    MultipartForm.Part(name: "userId", value: userId),
-                    MultipartForm.Part(name: "userName", value: loggedInUser.name!)
-                ])
-                if let url = URL(string: "http://10.20.4.157:9014/post/add-post") {
-                    var request = URLRequest(url: url)
-                    request.httpMethod = "POST"
-                    request.setValue(form.contentType, forHTTPHeaderField: "Content-Type")
-                    let session = URLSession(configuration: .default)
-                    let task = session.uploadTask(with: request, from: form.bodyData)
-                    task.resume()
+            if let _ = self.storyImage.image?.jpegData(compressionQuality: 0.7), let userId = self.userId, let imageUrl = self.imageUrl {
+                let stringURL = "http://10.20.4.157:9011/story/add-story"
+                guard let url = URL(string: stringURL) else {
+                    print("Problem in url string")
+                    return
                 }
+                var request = URLRequest(url: url)
+                request.httpMethod = "POST"
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                let body: [String: AnyHashable] = [
+                    "url": imageUrl,
+                    "userId": userId
+                ]
+
+                request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: .fragmentsAllowed)
+
+                let task = URLSession.shared.dataTask(with: request) {data, _, error in
+                    if (error != nil) {
+                        print("Error in session")
+                        return
+                    }
+                }
+                task.resume()
             }
         }
         if !isImageSelected {
             self.dismiss(animated: true, completion: nil)
-            
         }
-            self.storyImage.image = nil
-            self.dismiss(animated: true, completion: nil)
-        }
+        self.dismiss(animated: true, completion: nil)
+    }
     
     
     // MARK: - Functions
@@ -74,14 +82,29 @@ class AddStoryViewController: UIViewController, UIImagePickerControllerDelegate,
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            storyImage.image = image
-            isImageSelected = true
-        } else {
-            print("Error")
-        }
-        
+            if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+                storyImage.image = image
+                let imageRef = storageRef.child("image")
+                           let imageData : Data = image.pngData()!
+                           imageRef.putData(imageData,metadata: nil, completion: {_, error in
+                               guard error == nil else {
+                                print(error.debugDescription)
+                                   print("Failed to upload")
+                                   return
+                               }
+                           })
+                           imageRef.downloadURL(completion: {url, error in
+                               guard let url = url , error == nil else {
+                                   return
+                               }
+                                let urlString = url.absoluteString
+                                print("image URL: ", urlString)
+                                self.imageUrl = urlString
+                           })
+                           isImageSelected = true
+                       } else {
+                           print("Error")
+            }
         self.dismiss(animated: true, completion: nil)
     }
-
 }

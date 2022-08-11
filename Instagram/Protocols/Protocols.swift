@@ -22,6 +22,10 @@ protocol PostManagerDelegate: AnyObject {
     func updatedData(postData: [PostModel])
 }
 
+protocol StoryManagerDelegate: AnyObject {
+    func updatedData(storyData: [StoryModel])
+}
+
 protocol UserIdDelegate: AnyObject {
     func getUserId(userId: String)
 }
@@ -36,4 +40,8 @@ protocol PostDetailDelegate: AnyObject {
 
 protocol UserPostsDelegate: AnyObject {
     func getUserPosts(posts: [PostModel])
+}
+
+protocol AdsManagerDelegate: AnyObject {
+    func getAds(adData: AdModel)
 }

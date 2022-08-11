@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITableViewDelegate, UITableViewDataSource, CommentsDelegate, PostDetailDelegate, PostManagerDelegate {
+class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITableViewDelegate, UITableViewDataSource, CommentsDelegate, PostDetailDelegate, PostManagerDelegate, StoryManagerDelegate {
     
     // MARK: - Outlets
     
@@ -22,6 +22,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     let feedKCellIdentifier = "FeedTableViewCell"
     var postData: [PostModel]?
     let postAPI = FeedAPI()
+    var storyData: [StoryModel]?
+    let storyAPI = StoryAPI()
     var loggedInUser: UserModel?
     var tableRowHeight: Double?
     var userId: String?
@@ -29,7 +31,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     // MARK: - Actions
     
     @IBAction func addStoryAction(_ sender: Any) {
-        
+        if let addStoryViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "AddStoryViewController") as? AddStoryViewController, let userId = self.userId {
+            addStoryViewController.userId = userId
+            self.present(addStoryViewController, animated: true, completion: nil)
+        }
     }
     
     // MARK: - Functions
@@ -44,6 +49,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         feedTableView.delegate = self
         feedTableView.dataSource = self
         postAPI.delegate = self
+        storyAPI.delegate = self
         feedTableView.rowHeight = UITableView.automaticDimension
         feedTableView.estimatedRowHeight = 50
         addStoryOutlet.layer.borderWidth = 0.5
@@ -51,7 +57,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         addStoryOutlet.layer.borderColor = UIColor.gray.cgColor
         addStoryOutlet.layer.cornerRadius = addStoryOutlet.frame.height / 2
         addStoryOutlet.clipsToBounds = true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         postAPI.fecthPostDetails()
+        storyAPI.fecthStoryDetails()
     }
     
     func registerCustomViewInCell() {
@@ -72,14 +82,13 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         tableRowHeight = newHeight
     }
     
-    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == storyCollectionView {
-            return 10
+        if let storyData = storyData {
+            return storyData.count
         }
         return 0
     }
@@ -97,7 +106,12 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             cell.storyImage.layer.cornerRadius = cell.storyImage.frame.height / 2
             cell.storyImage.clipsToBounds = true
             
-            cell.storyName.text = "Adarsh"
+            if let storyImage = storyData?[indexPath.row].url {
+                if let url = URL(string: storyImage){
+                    cell.storyImage.load(url: url)
+                }
+            }
+            cell.storyName.text = storyData?[indexPath.row].userID
             return cell
         } else {
             return UICollectionViewCell()
@@ -105,12 +119,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        if collectionView == storyCollectionView {
-            return CGSize(width: storyCollectionView.bounds.height, height: storyCollectionView.bounds.height)
-        } else {
-            return CGSize(width: 0.0, height: 0.0)
-        }
+        return CGSize(width: storyCollectionView.bounds.height, height: storyCollectionView.bounds.height)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -123,6 +132,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let storyViewController = self.storyboard?.instantiateViewController(withIdentifier: "StoryViewController") as! StoryViewController
+        storyViewController.imageUrl = storyData?[indexPath.row].url
         self.present(storyViewController, animated: true, completion: nil)
     }
 
@@ -159,9 +169,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             cell.userName.text = data.name
             
             if let postImage = data.postURL {
-                
-                cell.postImage.load(url: URL(string: postImage)!)
-                cell.postImage.contentMode = .scaleToFill
+                if let url = URL(string: postImage){
+                    cell.postImage.load(url: url)
+                    cell.postImage.contentMode = .scaleToFill
+                }
             } else {
                 cell.postImage.isHidden = true
                 cell.imageHeightConstraint.constant = 0.0
@@ -188,6 +199,13 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         DispatchQueue.main.async {
             self.postData = postData
             self.feedTableView.reloadData()
+        }
+    }
+    
+    func updatedData(storyData: [StoryModel]) {
+        DispatchQueue.main.async {
+            self.storyData = storyData
+            self.storyCollectionView.reloadData()
         }
     }
 }

@@ -69,9 +69,11 @@ class ViewController: UIViewController, UITextFieldDelegate, CheckValidation, Us
     
     func sendStatus(status: Bool) {
         DispatchQueue.main.async {
-            if status, let mainTabViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "MainTabViewController") as? MainTabViewController {
+            if status, let mainTabViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "MainTabViewController") as? MainTabViewController, let userId = self.userId {
                 mainTabViewController.loggedInUser = self.loggedInUser
-                //mainTabViewController.userId = userId
+                mainTabViewController.userId = userId
+                mainTabViewController.userName = self.loggedInUser?.name
+                mainTabViewController.token = self.token
                 self.navigationController?.pushViewController(mainTabViewController, animated: true)
             } else {
                 let alert = UIAlertController(title: "Alert!", message: "Email or Password you entered is incorrect", preferredStyle: UIAlertController.Style.alert)
