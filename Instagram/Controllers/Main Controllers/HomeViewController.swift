@@ -111,7 +111,13 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                     cell.storyImage.load(url: url)
                 }
             }
-            cell.storyName.text = storyData?[indexPath.row].userID
+            
+            if let name = storyData?[indexPath.row].name {
+                cell.storyName.text = name
+            } else {
+                cell.storyName.text = "Adarsh"
+            }
+            
             return cell
         } else {
             return UICollectionViewCell()
@@ -133,6 +139,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let storyViewController = self.storyboard?.instantiateViewController(withIdentifier: "StoryViewController") as! StoryViewController
         storyViewController.imageUrl = storyData?[indexPath.row].url
+        if let name = storyData?[indexPath.row].name {
+            storyViewController.name = name
+        } else {
+            storyViewController.name = "Adarsh"
+        }
         self.present(storyViewController, animated: true, completion: nil)
     }
 

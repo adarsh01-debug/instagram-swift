@@ -29,6 +29,17 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     var getUserPostsAPI = GetUserPostsAPI()
     var postModel: [PostModel]?
     
+    // MARK: - Actions
+    
+    
+    @IBAction func editProfileAction(_ sender: Any) {
+        if let editProfileViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "EditProfileViewController") as? EditProfileViewController, let userId = self.userId {
+            editProfileViewController.userId = userId
+            self.present(editProfileViewController, animated: true, completion: nil)
+        }
+    }
+    
+    
     // MARK: - functions
     
     override func viewDidLoad() {
@@ -53,8 +64,13 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         profilePic.layer.cornerRadius = profilePic.frame.height / 2
         profilePic.clipsToBounds = true
         getUserPostsAPI.delegate = self
-        getUserPostsAPI.fecthUserPostsDetails(userId!)
         userName.text = userNamee
+        postsCollectionView.delegate = self
+        postsCollectionView.dataSource = self
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        getUserPostsAPI.fecthUserPostsDetails(userId!)
     }
     
     func registerCustomViewInCell() {
@@ -67,8 +83,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == postsCollectionView {
-            return 10
+        if let postModel = self.postModel {
+            return postModel.count
         }
         return 0
     }
@@ -80,12 +96,12 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
             }
             
             // Configure the cell
-            if postModel != nil {
-                //print("postURL", postModel?[indexPath.row].postURL)
-                cell.postImage.load(url: URL(string: (postModel?[indexPath.row].postURL)!)!)
+            if let postModel = self.postModel {
+                if let url = URL(string: (postModel[indexPath.row].postURL!)) {
+                    cell.postImage.load(url: url)
+                }
             }
-            
-            //cell.postImage.image
+           // cell.postImage.image
             return cell
         } else {
             return UICollectionViewCell()
@@ -93,20 +109,21 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: postsCollectionView.bounds.height, height: postsCollectionView.bounds.height)
+        return CGSize(width: 100, height: 100)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0)
+        return UIEdgeInsets(top: 5.0, left: 5.0, bottom: 5.0, right: 5.0)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 10.0
+        return 5.0
     }
     
     func getUserPosts(posts: [PostModel]) {
         DispatchQueue.main.async {
             self.postModel = posts
+            self.postsCollectionView.reloadData()
         }
     }
 

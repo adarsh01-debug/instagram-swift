@@ -9,12 +9,12 @@ import Foundation
 
 struct StoryModel: Codable {
     let id, userID: String?
-    let url: String?
+    let url, name: String?
     let createdTime, expiryTime: String?
 
     enum CodingKeys: String, CodingKey {
         case id
         case userID = "userId"
-        case url, createdTime, expiryTime
+        case url, createdTime, expiryTime, name
     }
 }

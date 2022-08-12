@@ -33,6 +33,9 @@ class SearchViewController: UIViewController, AdsManagerDelegate {
         // Do any additional setup after loading the view.
         adAPI.delegate = self
         adType.font = UIFont.boldSystemFont(ofSize: 16.0)
+        if let token = token {
+            adAPI.fetchAd(token)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

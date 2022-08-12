@@ -12,7 +12,7 @@ class AdAPI {
     var delegate: AdsManagerDelegate?
     
     func fetchAd(_ token: String) {
-        if let url = URL(string: "http://10.20.3.120:8111/user/getads"){
+        if let url = URL(string: "http://10.20.3.120:8111/ads/getads"){
             let session = URLSession(configuration: .default)
             var request = URLRequest(url: url)
             request.httpMethod = "GET"

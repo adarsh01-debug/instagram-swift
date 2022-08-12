@@ -454,25 +454,34 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2sA-fa-5vP">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="85" width="414" height="777"/>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username's Story" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IAi-uM-8Ao">
+                                <rect key="frame" x="10" y="54" width="137" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="bQU-xV-bJq"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="bQU-xV-bJq" firstAttribute="trailing" secondItem="2sA-fa-5vP" secondAttribute="trailing" id="3eK-Gv-OfM"/>
+                            <constraint firstItem="IAi-uM-8Ao" firstAttribute="leading" secondItem="bQU-xV-bJq" secondAttribute="leading" constant="10" id="9FV-rc-TgM"/>
                             <constraint firstItem="bQU-xV-bJq" firstAttribute="bottom" secondItem="2sA-fa-5vP" secondAttribute="bottom" id="9QJ-f3-1kB"/>
-                            <constraint firstItem="2sA-fa-5vP" firstAttribute="top" secondItem="bQU-xV-bJq" secondAttribute="top" id="kaj-c6-khx"/>
+                            <constraint firstItem="2sA-fa-5vP" firstAttribute="top" secondItem="IAi-uM-8Ao" secondAttribute="bottom" constant="10" id="9vP-T3-rA5"/>
+                            <constraint firstItem="IAi-uM-8Ao" firstAttribute="top" secondItem="bQU-xV-bJq" secondAttribute="top" constant="10" id="eG0-zt-OXD"/>
                             <constraint firstItem="2sA-fa-5vP" firstAttribute="leading" secondItem="bQU-xV-bJq" secondAttribute="leading" id="yKW-l2-Y27"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="storyImage" destination="2sA-fa-5vP" id="zEm-eu-F4Z"/>
+                        <outlet property="userName" destination="IAi-uM-8Ao" id="YwV-f2-F6q"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RvL-9v-LdB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-178" y="2977"/>
+            <point key="canvasLocation" x="-178.2608695652174" y="2976.5625"/>
         </scene>
         <!--Comment View Controller-->
         <scene sceneID="qJZ-LC-JVH">
@@ -834,7 +843,7 @@
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <segue destination="W0d-wP-9dq" kind="presentation" id="hgL-V1-ppt"/>
+                                    <action selector="editProfileAction:" destination="0xv-Im-AfD" eventType="touchUpInside" id="Fp4-lt-TWe"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="awU-g6-GtP">
@@ -942,46 +951,41 @@
             <objects>
                 <viewController storyboardIdentifier="EditProfileViewController" id="W0d-wP-9dq" customClass="EditProfileViewController" customModule="Instagram" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bZj-sW-TYN">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile_pic" translatesAutoresizingMaskIntoConstraints="NO" id="g7B-SB-oCg">
-                                <rect key="frame" x="145" y="10" width="124" height="124"/>
+                                <rect key="frame" x="145" y="54" width="124" height="124"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="g7B-SB-oCg" secondAttribute="height" multiplier="1:1" id="doW-wN-p3j"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DrQ-xF-WWd">
-                                <rect key="frame" x="134.5" y="144" width="145" height="30"/>
+                                <rect key="frame" x="134.5" y="188" width="145" height="30"/>
                                 <state key="normal" title="Change Profile Photo"/>
                                 <connections>
                                     <action selector="changeProfilePhotoAction:" destination="W0d-wP-9dq" eventType="touchUpInside" id="3Xq-ef-7NS"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="d20-Wt-eq7">
-                                <rect key="frame" x="10" y="209" width="394" height="34"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QWI-D7-Apg">
                                 <rect key="frame" x="10" y="253" width="394" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Bio" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Z9b-3c-TxB">
-                                <rect key="frame" x="10" y="297" width="394" height="168.5"/>
+                                <rect key="frame" x="10" y="307" width="394" height="179.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mOj-bg-RJv">
-                                <rect key="frame" x="10" y="485.5" width="174" height="30"/>
+                                <rect key="frame" x="10" y="506.5" width="174" height="30"/>
                                 <state key="normal" title="Switch to private account"/>
                                 <connections>
                                     <action selector="toggleAccountTypeAction:" destination="W0d-wP-9dq" eventType="touchUpInside" id="OIm-MK-L59"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zIi-78-D73">
-                                <rect key="frame" x="10" y="565.5" width="394" height="30"/>
+                                <rect key="frame" x="10" y="586.5" width="394" height="30"/>
                                 <color key="backgroundColor" systemColor="linkColor"/>
                                 <state key="normal" title="Save">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -995,23 +999,20 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Z9b-3c-TxB" firstAttribute="height" secondItem="bZj-sW-TYN" secondAttribute="height" multiplier="0.2" id="1Nf-Ai-s2f"/>
-                            <constraint firstItem="Z9b-3c-TxB" firstAttribute="top" secondItem="QWI-D7-Apg" secondAttribute="bottom" constant="10" id="3kb-cU-n46"/>
+                            <constraint firstItem="Z9b-3c-TxB" firstAttribute="leading" secondItem="d20-Wt-eq7" secondAttribute="leading" id="33T-4L-g4j"/>
                             <constraint firstItem="zIi-78-D73" firstAttribute="trailing" secondItem="Z9b-3c-TxB" secondAttribute="trailing" id="8PN-Ie-goc"/>
+                            <constraint firstItem="Z9b-3c-TxB" firstAttribute="trailing" secondItem="d20-Wt-eq7" secondAttribute="trailing" id="BOK-eH-9kb"/>
                             <constraint firstItem="g7B-SB-oCg" firstAttribute="centerX" secondItem="tF7-Qn-NIE" secondAttribute="centerX" id="FQX-ns-QQE"/>
                             <constraint firstItem="zIi-78-D73" firstAttribute="leading" secondItem="Z9b-3c-TxB" secondAttribute="leading" id="JcJ-zo-tah"/>
-                            <constraint firstItem="Z9b-3c-TxB" firstAttribute="trailing" secondItem="QWI-D7-Apg" secondAttribute="trailing" id="K1R-Pu-JjD"/>
                             <constraint firstItem="mOj-bg-RJv" firstAttribute="top" secondItem="Z9b-3c-TxB" secondAttribute="bottom" constant="20" id="NZI-SV-EEl"/>
                             <constraint firstItem="g7B-SB-oCg" firstAttribute="top" secondItem="tF7-Qn-NIE" secondAttribute="top" constant="10" id="QFz-t8-CCE"/>
                             <constraint firstItem="DrQ-xF-WWd" firstAttribute="top" secondItem="g7B-SB-oCg" secondAttribute="bottom" constant="10" id="Qao-pJ-d0n"/>
                             <constraint firstItem="zIi-78-D73" firstAttribute="top" secondItem="mOj-bg-RJv" secondAttribute="bottom" constant="50" id="TQr-Pr-tZR"/>
+                            <constraint firstItem="Z9b-3c-TxB" firstAttribute="top" secondItem="d20-Wt-eq7" secondAttribute="bottom" constant="20" id="VQI-IQ-jrh"/>
                             <constraint firstItem="g7B-SB-oCg" firstAttribute="width" secondItem="bZj-sW-TYN" secondAttribute="width" multiplier="0.3" id="Y45-D6-yDr"/>
-                            <constraint firstItem="QWI-D7-Apg" firstAttribute="trailing" secondItem="d20-Wt-eq7" secondAttribute="trailing" id="ZpR-pK-x9C"/>
-                            <constraint firstItem="QWI-D7-Apg" firstAttribute="top" secondItem="d20-Wt-eq7" secondAttribute="bottom" constant="10" id="a4n-qU-Deg"/>
-                            <constraint firstItem="QWI-D7-Apg" firstAttribute="leading" secondItem="d20-Wt-eq7" secondAttribute="leading" id="bD0-RU-4Mc"/>
                             <constraint firstItem="d20-Wt-eq7" firstAttribute="top" secondItem="DrQ-xF-WWd" secondAttribute="bottom" constant="35" id="fdd-b0-y2v"/>
                             <constraint firstItem="mOj-bg-RJv" firstAttribute="leading" secondItem="Z9b-3c-TxB" secondAttribute="leading" id="lfE-2e-McC"/>
                             <constraint firstItem="d20-Wt-eq7" firstAttribute="leading" secondItem="tF7-Qn-NIE" secondAttribute="leading" constant="10" id="obE-Fo-toP"/>
-                            <constraint firstItem="Z9b-3c-TxB" firstAttribute="leading" secondItem="QWI-D7-Apg" secondAttribute="leading" id="qwF-C8-WCb"/>
                             <constraint firstItem="DrQ-xF-WWd" firstAttribute="centerX" secondItem="g7B-SB-oCg" secondAttribute="centerX" id="usQ-wx-8MF"/>
                             <constraint firstItem="tF7-Qn-NIE" firstAttribute="trailing" secondItem="d20-Wt-eq7" secondAttribute="trailing" constant="10" id="xnj-Bv-C8I"/>
                         </constraints>
@@ -1019,7 +1020,6 @@
                     <navigationItem key="navigationItem" id="BpQ-yG-JWR"/>
                     <connections>
                         <outlet property="bioField" destination="Z9b-3c-TxB" id="bQN-vg-jmZ"/>
-                        <outlet property="emailField" destination="QWI-D7-Apg" id="m1x-Db-lEA"/>
                         <outlet property="nameField" destination="d20-Wt-eq7" id="N7p-D2-FxA"/>
                         <outlet property="profileImage" destination="g7B-SB-oCg" id="lpy-xg-0zB"/>
                         <outlet property="saveOutlet" destination="zIi-78-D73" id="04g-Wf-5Fp"/>

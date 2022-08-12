@@ -187,8 +187,8 @@
 				751BB78328A154FE002D24AF /* CommentModel.swift */,
 				759E45B528A287E600671B46 /* UserModel.swift */,
 				759E45C428A3778B00671B46 /* PostModel.swift */,
-				7585A94D28A4F001006B8E95 /* StoryModel.swift */,
 				7542736328A50CE80012D0FC /* AdModel.swift */,
+				7585A94D28A4F001006B8E95 /* StoryModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";

@@ -15,7 +15,6 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UINaviga
     
     @IBOutlet var profileImage: UIImageView!
     @IBOutlet var nameField: UITextField!
-    @IBOutlet var emailField: UITextField!
     @IBOutlet var bioField: UITextField!
     @IBOutlet var toggleAccountType: UIButton!
     @IBOutlet var saveOutlet: UIButton!
@@ -26,6 +25,7 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UINaviga
     let storageRef = Storage.storage().reference()
     var isImageSelected: Bool = false
     var imageUrl: String?
+    var userId: String?
     
     // MARK: - Actions
     
@@ -52,35 +52,37 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UINaviga
     }
     
     @IBAction func saveAction(_ sender: Any) {
-//        if isImageSelected {
-//            if let _ = self.profileImage.image?.jpegData(compressionQuality: 0.7), let userId = self.userId, let imageUrl = self.imageUrl {
-//                let stringURL = "http://10.20.4.157:9011/story/add-story"
-//                guard let url = URL(string: stringURL) else {
-//                    print("Problem in url string")
-//                    return
-//                }
-//                var request = URLRequest(url: url)
-//                request.httpMethod = "POST"
-//                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-//                let body: [String: AnyHashable] = [
-//                    "url": imageUrl,
-//                    "userId": userId
-//                ]
-//
-//                request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: .fragmentsAllowed)
-//
-//                let task = URLSession.shared.dataTask(with: request) {data, _, error in
-//                    if (error != nil) {
-//                        print("Error in session")
-//                        return
-//                    }
-//                }
-//                task.resume()
-//            }
-//        }
-//        if !isImageSelected || nameField.text == "" || bioField.text == "" {
-//            // show alert
-//        }
+        if isImageSelected {
+            if let _ = self.profileImage.image?.jpegData(compressionQuality: 0.7), let userId = self.userId, let imageUrl = self.imageUrl, let name = nameField.text, let bio = bioField.text {
+                let stringURL = "http://10.20.4.157:9011/story/add-story"
+                guard let url = URL(string: stringURL) else {
+                    print("Problem in url string")
+                    return
+                }
+                var request = URLRequest(url: url)
+                request.httpMethod = "POST"
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                let body: [String: AnyHashable] = [
+                    "url": imageUrl,
+                    "userId": userId,
+                    "name": name,
+                    "bio": bio
+                ]
+
+                request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: .fragmentsAllowed)
+
+                let task = URLSession.shared.dataTask(with: request) {data, _, error in
+                    if (error != nil) {
+                        print("Error in session")
+                        return
+                    }
+                }
+                task.resume()
+            }
+        }
+        if !isImageSelected || nameField.text == "" || bioField.text == "" {
+            // show alert
+        }
         navigationController?.popViewController(animated: true)
         dismiss(animated: true, completion: nil)
     }
@@ -99,7 +101,6 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UINaviga
         saveOutlet.layer.cornerRadius = 8.0
         saveOutlet.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16.0)
         nameField.delegate = self
-        emailField.delegate = self
         bioField.delegate = self
     }
     
