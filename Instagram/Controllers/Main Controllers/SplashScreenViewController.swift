@@ -9,7 +9,10 @@ import UIKit
 
 class SplashScreenViewController: UIViewController {
 
+    // MARK: - Outlets
     @IBOutlet var splashGif: UIImageView!
+    
+    // MARK: - Functions
     override func viewDidLoad() {
         super.viewDidLoad()
 

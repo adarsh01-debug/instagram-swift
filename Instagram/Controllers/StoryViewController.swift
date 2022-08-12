@@ -10,16 +10,14 @@ import UIKit
 class StoryViewController: UIViewController {
 
     // MARK: - Outlets
-    
     @IBOutlet var storyImage: UIImageView!
     @IBOutlet var userName: UILabel!
-    // MARK: - Variables
     
+    // MARK: - Variables
     var imageUrl: String?
     var name: String?
     
     // MARK: - Actions
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -32,5 +30,4 @@ class StoryViewController: UIViewController {
             userName.text = "\(name)'s Story"
         }
     }
-
 }

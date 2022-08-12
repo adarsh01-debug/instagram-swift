@@ -9,10 +9,8 @@ import UIKit
 import FirebaseStorage
 
 class EditProfileViewController: UIViewController, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
-    
 
     // MARK: - Outlets
-    
     @IBOutlet var profileImage: UIImageView!
     @IBOutlet var nameField: UITextField!
     @IBOutlet var bioField: UITextField!
@@ -20,7 +18,6 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UINaviga
     @IBOutlet var saveOutlet: UIButton!
     
     // MARK: - Variables
-    
     var isPrivate: Bool = false
     let storageRef = Storage.storage().reference()
     var isImageSelected: Bool = false
@@ -28,7 +25,6 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UINaviga
     var userId: String?
     
     // MARK: - Actions
-    
     @IBAction func toggleAccountTypeAction(_ sender: Any) {
         if isPrivate {
             toggleAccountType.setTitle("Switch to private account", for: .normal)
@@ -42,12 +38,9 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UINaviga
     @IBAction func changeProfilePhotoAction(_ sender: Any) {
         let image = UIImagePickerController()
         image.delegate = self
-        
         image.sourceType = UIImagePickerController.SourceType.photoLibrary
         image.allowsEditing = false
-        
         self.present(image, animated: true) {
-            
         }
     }
     
@@ -68,9 +61,7 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UINaviga
                     "name": name,
                     "bio": bio
                 ]
-
                 request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: .fragmentsAllowed)
-
                 let task = URLSession.shared.dataTask(with: request) {data, _, error in
                     if (error != nil) {
                         print("Error in session")
@@ -87,9 +78,7 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UINaviga
         dismiss(animated: true, completion: nil)
     }
     
-    
     // MARK: - Functions
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -103,7 +92,6 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UINaviga
         nameField.delegate = self
         bioField.delegate = self
     }
-    
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {

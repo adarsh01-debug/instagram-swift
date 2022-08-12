@@ -10,7 +10,6 @@ import Foundation
 class GetUserPostsAPI {
     
     let apiURL = "http://10.20.4.157:9014/post/posts/"
-    
     weak var delegate: UserPostsDelegate?
     
     func fecthUserPostsDetails(_ userId: String) {
@@ -21,13 +20,11 @@ class GetUserPostsAPI {
     func performRequest(with urlString: String) {
         if let url = URL(string: urlString) {
             let session = URLSession(configuration: .default)
-            
             let task = session.dataTask(with: url) { [weak self] (data, response, error) in
                 if error != nil {
                     print("Error!")
                     return
                 }
-                
                 if let safeData = data {
                     if let posts = self?.parseJSON(safeData) {
                         self?.delegate?.getUserPosts(posts: posts)

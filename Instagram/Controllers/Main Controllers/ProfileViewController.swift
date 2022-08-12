@@ -10,7 +10,6 @@ import UIKit
 class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UserPostsDelegate {
 
     // MARK: - Outlets
-    
     @IBOutlet var profilePic: UIImageView!
     @IBOutlet var numberOfPosts: UILabel!
     @IBOutlet var numberOfFollowers: UILabel!
@@ -20,9 +19,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBOutlet var bio: UILabel!
     @IBOutlet var postsCollectionView: UICollectionView!
     
-    
     // MARK: - Variables
-    
     var loggedInUser: UserModel?
     var userId: String?
     var userNamee: String?
@@ -30,8 +27,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     var postModel: [PostModel]?
     
     // MARK: - Actions
-    
-    
     @IBAction func editProfileAction(_ sender: Any) {
         if let editProfileViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "EditProfileViewController") as? EditProfileViewController, let userId = self.userId {
             editProfileViewController.userId = userId
@@ -39,9 +34,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         }
     }
     
-    
-    // MARK: - functions
-    
+    // MARK: - Functions
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -51,13 +44,11 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         numberOfFollowers.font = UIFont.boldSystemFont(ofSize: 18.0)
         numberOfFollowing.font = UIFont.boldSystemFont(ofSize: 18.0)
         userName.font = UIFont.boldSystemFont(ofSize: 18.0)
-        
         editProfileButtonOutlet.layer.masksToBounds = true
         editProfileButtonOutlet.layer.borderWidth = 0.5
         editProfileButtonOutlet.layer.borderColor = UIColor.gray.cgColor
         editProfileButtonOutlet.layer.cornerRadius = 8.0
         editProfileButtonOutlet.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18.0)
-        
         profilePic.layer.borderWidth = 0.5
         profilePic.layer.masksToBounds = false
         profilePic.layer.borderColor = UIColor.gray.cgColor
@@ -101,7 +92,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
                     cell.postImage.load(url: url)
                 }
             }
-           // cell.postImage.image
             return cell
         } else {
             return UICollectionViewCell()
@@ -126,5 +116,4 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
             self.postsCollectionView.reloadData()
         }
     }
-
 }

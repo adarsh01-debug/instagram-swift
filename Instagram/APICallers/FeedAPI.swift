@@ -19,13 +19,11 @@ class FeedAPI {
     func performRequest(with urlString: String) {
         if let url = URL(string: urlString) {
             let session = URLSession(configuration: .default)
-            
             let task = session.dataTask(with: url) { [weak self] (data, response, error) in
                 if error != nil {
                     print("Error!")
                     return
                 }
-                
                 if let safeData = data {
                     if let posts = self?.parseJSON(safeData) {
                         self?.delegate?.updatedData(postData: posts)
@@ -59,7 +57,6 @@ class FetchImage {
     weak var delegate: PostManagerDelegate?
     
     func fecthImage(_ imageName: String) {
-        
         let urlString = "\(apiURL)\(imageName)"
         performRequest(with: urlString)
     }
@@ -67,13 +64,11 @@ class FetchImage {
     func performRequest(with urlString: String) {
         if let url = URL(string: urlString) {
             let session = URLSession(configuration: .default)
-            
             let task = session.dataTask(with: url) { [weak self] (data, response, error) in
                 if error != nil {
                     print("Error!")
                     return
                 }
-                
                 if let safeData = data {
                     if let posts = self?.parseJSON(safeData) {
                         self?.delegate?.updatedData(postData: posts)

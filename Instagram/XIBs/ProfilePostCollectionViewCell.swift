@@ -9,7 +9,10 @@ import UIKit
 
 class ProfilePostCollectionViewCell: UICollectionViewCell {
 
+    // MARK: - Outlets
     @IBOutlet var postImage: UIImageView!
+    
+    // MARK: - Functions
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

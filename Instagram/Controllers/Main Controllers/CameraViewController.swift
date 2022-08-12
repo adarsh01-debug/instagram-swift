@@ -12,7 +12,6 @@ import MultipartForm
 class CameraViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UserIdDelegate {
 
     // MARK: - Outlets
-    
     @IBOutlet var imageUpload: UIImageView!
     @IBOutlet var captionField: UITextField!
     @IBOutlet var uploadButtonOutlet: UIButton!
@@ -27,16 +26,12 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     var imageUrl: String?
     
     // MARK: - Actions
-    
     @IBAction func choosePhotoButton(_ sender: Any) {
         let image = UIImagePickerController()
         image.delegate = self
-        
         image.sourceType = UIImagePickerController.SourceType.photoLibrary
         image.allowsEditing = false
-        
         self.present(image, animated: true) {
-            
         }
     }
     
@@ -59,9 +54,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
                     "userId": userId,
                     "userName": loggedInUser.name
                 ]
-
                 request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: .fragmentsAllowed)
-
                 let task = URLSession.shared.dataTask(with: request) {data, _, error in
                     if (error != nil) {
                         print("Error in session")
@@ -89,9 +82,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
                     "userId": userId,
                     "userName": loggedInUser.name
                 ]
-
                 request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: .fragmentsAllowed)
-
                 let task = URLSession.shared.dataTask(with: request) {data, _, error in
                     if (error != nil) {
                         print("Error in session")
@@ -106,7 +97,6 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     }
     
     // MARK: - Functions
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -114,7 +104,6 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         uploadButtonOutlet.layer.masksToBounds = true
         uploadButtonOutlet.layer.cornerRadius = 8.0
         uploadButtonOutlet.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16.0)
-        
         captionField.text = "New pic uploadinggg!!!!"
         loginTemp.delegate = self
         loginTemp.fecthUserDetails(email: (loggedInUser?.email)!)

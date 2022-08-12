@@ -9,7 +9,7 @@ import UIKit
 
 class MainTabViewController: UITabBarController, UITabBarControllerDelegate {
 
-    
+    // MARK: - Variables
     var loggedInUser: UserModel?
     var userId: String?
     var userName: String?
@@ -23,6 +23,7 @@ class MainTabViewController: UITabBarController, UITabBarControllerDelegate {
     var searchNavController: UINavigationController?
     var searchViewController: SearchViewController?
     
+    // MARK: - Functions
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -45,5 +46,4 @@ class MainTabViewController: UITabBarController, UITabBarControllerDelegate {
         profileViewController?.userNamee = self.userName
         searchViewController?.token = self.token
     }
-
 }

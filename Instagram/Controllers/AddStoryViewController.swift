@@ -11,13 +11,11 @@ import FirebaseStorage
 class AddStoryViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     // MARK: - Outlets
-    
     @IBOutlet var storyImage: UIImageView!
     @IBOutlet var choosePhotoButtonOutlet: UIButton!
     @IBOutlet var shareButtonOutlet: UIButton!
     
     // MARK: - Variables
-    
     let storageRef = Storage.storage().reference()
     var isImageSelected: Bool = false
     var loggedInUser: UserModel?
@@ -26,16 +24,12 @@ class AddStoryViewController: UIViewController, UIImagePickerControllerDelegate,
     var imageUrl: String?
     
     // MARK: - Actions
-    
     @IBAction func choosePhotoButtonAction(_ sender: Any) {
         let image = UIImagePickerController()
         image.delegate = self
-        
         image.sourceType = UIImagePickerController.SourceType.photoLibrary
         image.allowsEditing = false
-        
         self.present(image, animated: true) {
-            
         }
     }
     
@@ -54,9 +48,7 @@ class AddStoryViewController: UIViewController, UIImagePickerControllerDelegate,
                     "url": imageUrl,
                     "userId": userId
                 ]
-
                 request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: .fragmentsAllowed)
-
                 let task = URLSession.shared.dataTask(with: request) {data, _, error in
                     if (error != nil) {
                         print("Error in session")
@@ -72,9 +64,7 @@ class AddStoryViewController: UIViewController, UIImagePickerControllerDelegate,
         self.dismiss(animated: true, completion: nil)
     }
     
-    
     // MARK: - Functions
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 

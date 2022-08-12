@@ -10,13 +10,11 @@ import UIKit
 class StoryCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Outlets
-    
     @IBOutlet var storyName: UILabel!
     @IBOutlet var storyImage: UIImageView!
     
     
     // MARK: - Functions
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

@@ -9,8 +9,11 @@ import UIKit
 
 class CommentViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    // MARK: - Outlets
+    @IBOutlet var commentTableView: UITableView!
+    
+    // MARK: - Variables
     let kCellIdentifier = "CommentTableViewCell"
-
     let commentModel: [CommentModel] = [
         CommentModel(profilePic: "https://images.unsplash.com/photo-1492528491602-a42e1caf03ad?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80", username: "adarsh.not.found", comment: "Awesome pic"),
         CommentModel(profilePic: "https://images.unsplash.com/photo-1492528491602-a42e1caf03ad?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80", username: "bored_now", comment: "awweieiieee"),
@@ -20,9 +23,7 @@ class CommentViewController: UIViewController, UITableViewDelegate, UITableViewD
         CommentModel(profilePic: nil, username: "lmao.rofl", comment: "why am i seeing this pic?")
     ]
     
-    @IBOutlet var commentTableView: UITableView!
-    
-    
+    // MARK: - Functions
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -50,15 +51,7 @@ class CommentViewController: UIViewController, UITableViewDelegate, UITableViewD
             print("Failed to create the custom cell")
             return UITableViewCell()
         }
-        
         let data = commentModel[indexPath.row]
-        
-//        cell.profilePic.layer.borderWidth = 0.5
-//        cell.profilePic.layer.masksToBounds = false
-//        cell.profilePic.layer.borderColor = UIColor.gray.cgColor
-//        cell.profilePic.layer.cornerRadius = cell.profilePic.frame.height / 2
-//        cell.profilePic.clipsToBounds = true
-        
         if let profileUrl = data.profilePic {
             cell.commentorProfilePic.load(url: URL(string: profileUrl)!)
         } else {
@@ -66,8 +59,6 @@ class CommentViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         cell.commentorUsername.text = data.username
         cell.comment.text = data.comment
-        
-        
         return cell
     }
     

@@ -19,13 +19,11 @@ class StoryAPI {
     func performRequest(with urlString: String) {
         if let url = URL(string: urlString) {
             let session = URLSession(configuration: .default)
-            
             let task = session.dataTask(with: url) { [weak self] (data, response, error) in
                 if error != nil {
                     print("Error!")
                     return
                 }
-                
                 if let safeData = data {
                     if let stories = self?.parseJSON(safeData) {
                         self?.delegate?.updatedData(storyData: stories)

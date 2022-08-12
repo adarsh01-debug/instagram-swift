@@ -10,14 +10,11 @@ import UIKit
 class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITableViewDelegate, UITableViewDataSource, CommentsDelegate, PostDetailDelegate, PostManagerDelegate, StoryManagerDelegate {
     
     // MARK: - Outlets
-    
     @IBOutlet var storyCollectionView: UICollectionView!
     @IBOutlet var feedTableView: UITableView!
     @IBOutlet var addStoryOutlet: UIButton!
     
-    
     // MARK: - Variables
-    
     let storyKCellIdentifier = "StoryCollectionViewCell"
     let feedKCellIdentifier = "FeedTableViewCell"
     var postData: [PostModel]?
@@ -29,7 +26,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     var userId: String?
     
     // MARK: - Actions
-    
     @IBAction func addStoryAction(_ sender: Any) {
         if let addStoryViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "AddStoryViewController") as? AddStoryViewController, let userId = self.userId {
             addStoryViewController.userId = userId
@@ -38,7 +34,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     // MARK: - Functions
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -67,7 +62,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func registerCustomViewInCell() {
         let nib = UINib(nibName: "StoryCollectionViewCell", bundle: nil)
         storyCollectionView.register(nib, forCellWithReuseIdentifier: storyKCellIdentifier)
-        
         let newNib = UINib(nibName: "FeedTableViewCell", bundle: nil)
         feedTableView.register(newNib, forCellReuseIdentifier: feedKCellIdentifier)
     }
@@ -98,26 +92,22 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             guard let cell = storyCollectionView.dequeueReusableCell(withReuseIdentifier: storyKCellIdentifier, for: indexPath) as? StoryCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            
             // Configure the cell
             cell.storyImage.layer.borderWidth = 0.5
             cell.storyImage.layer.masksToBounds = false
             cell.storyImage.layer.borderColor = UIColor.gray.cgColor
             cell.storyImage.layer.cornerRadius = cell.storyImage.frame.height / 2
             cell.storyImage.clipsToBounds = true
-            
             if let storyImage = storyData?[indexPath.row].url {
                 if let url = URL(string: storyImage){
                     cell.storyImage.load(url: url)
                 }
             }
-            
             if let name = storyData?[indexPath.row].name {
                 cell.storyName.text = name
             } else {
                 cell.storyName.text = "Adarsh"
             }
-            
             return cell
         } else {
             return UICollectionViewCell()
@@ -163,22 +153,17 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             print("Failed to create the custom cell")
             return UITableViewCell()
         }
-        
         cell.delegate = self
         cell.postDelegate = self
-        
         if let postData = postData {
             let data = postData[indexPath.row]
-            
             cell.profilePic.layer.borderWidth = 0.5
             cell.profilePic.layer.masksToBounds = false
             cell.profilePic.layer.borderColor = UIColor.gray.cgColor
             cell.profilePic.layer.cornerRadius = cell.profilePic.frame.height / 2
             cell.profilePic.clipsToBounds = true
-            
             cell.profilePic.image = UIImage(systemName: "person")
             cell.userName.text = data.name
-            
             if let postImage = data.postURL {
                 if let url = URL(string: postImage){
                     cell.postImage.load(url: url)
@@ -188,12 +173,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 cell.postImage.isHidden = true
                 cell.imageHeightConstraint.constant = 0.0
             }
-            
             cell.caption.text = data.caption
             cell.postId = data.id
             cell.userId = data.userID
         }
-        
         return cell
     }
     

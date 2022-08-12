@@ -23,7 +23,6 @@ class FeedTableViewCell: UITableViewCell {
     @IBOutlet var viewMoreOutlet: UIButton!
     
     // MARK: - Variables
-    
     var avPLayer: AVPlayer?
     var isPaused: Bool = true
     var isLiked: Bool = false
@@ -35,7 +34,6 @@ class FeedTableViewCell: UITableViewCell {
     var postId: String?
     
     // MARK: - Actions
-    
     @IBAction func likeButtonAction(_ sender: Any) {
         if isLiked {
             likeButtonOutlet.setImage(UIImage(systemName: "hand.thumbsup"), for: UIControl.State.normal)
@@ -78,7 +76,6 @@ class FeedTableViewCell: UITableViewCell {
     
     
     // MARK: - Functions
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -111,7 +108,6 @@ class FeedTableViewCell: UITableViewCell {
                  print("Error in session")
                  return
              }
-             //self.getPostInfo(postId: self.postId!)
          }
          task.resume()
      }
@@ -136,36 +132,7 @@ class FeedTableViewCell: UITableViewCell {
                  print("Error in session")
                  return
              }
-             //self.getPostInfo(postId: self.postId!)
          }
          task.resume()
      }
-    
-//    func getPostInfo(postId: String){
-//            let finalUrl = "http://10.20.4.81:9016/post/get-reactions/\(postId)"
-//            if let url = URL(string: finalUrl){
-//                let session = URLSession(configuration: .default)
-//                let task = session.dataTask(with: url) { [weak self] (data, response, error) in
-//                    if (error != nil){
-//                        print("error in session")
-//                        return
-//                    }
-//                    if let safeData = data{
-//                        print("no error")
-//                        if let convertedData = self?.parseJSON(safeData){
-//                            DispatchQueue.main.async {
-//                                self?.postInfo.text = String(convertedData.likesCount) + "Likes " + String(convertedData.dislikesCount) + "Dislikes"
-//                            }
-//
-//                        }
-//                    }
-//
-//                }
-//                task.resume()
-//            }else{
-//                print("No user to get email from")
-//            }
-//        }
-
-
 }
