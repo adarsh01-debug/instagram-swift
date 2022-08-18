@@ -22,6 +22,7 @@
 		753F9B4928A4DE60000CBD28 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 753F9B4828A4DE60000CBD28 /* FirebaseStorage */; };
 		7542735F28A50CD80012D0FC /* AdAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7542735E28A50CD80012D0FC /* AdAPI.swift */; };
 		7542736428A50CE80012D0FC /* AdModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7542736328A50CE80012D0FC /* AdModel.swift */; };
+		7542737728A635D30012D0FC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7542737628A635D30012D0FC /* GoogleService-Info.plist */; };
 		756C8867289E862000DCFB15 /* GifExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756C8866289E862000DCFB15 /* GifExtension.swift */; };
 		756C886C289E867500DCFB15 /* SplashScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756C886B289E867500DCFB15 /* SplashScreenViewController.swift */; };
 		75801266289E3D2E003BF69B /* MainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75801265289E3D2E003BF69B /* MainTabViewController.swift */; };
@@ -41,7 +42,6 @@
 		75F32EA228A3E8F100ED8535 /* ProfilePostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F32EA028A3E8F100ED8535 /* ProfilePostCollectionViewCell.swift */; };
 		75F32EA328A3E8F100ED8535 /* ProfilePostCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75F32EA128A3E8F100ED8535 /* ProfilePostCollectionViewCell.xib */; };
 		75F32EA828A40FB600ED8535 /* GetUserPostsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F32EA728A40FB600ED8535 /* GetUserPostsAPI.swift */; };
-		75F32EAD28A4CA8B00ED8535 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 75F32EAC28A4CA8B00ED8535 /* GoogleService-Info.plist */; };
 		75F48C39289B9167005AFE9F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F48C38289B9167005AFE9F /* AppDelegate.swift */; };
 		75F48C3B289B9167005AFE9F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F48C3A289B9167005AFE9F /* SceneDelegate.swift */; };
 		75F48C3D289B9167005AFE9F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F48C3C289B9167005AFE9F /* ViewController.swift */; };
@@ -94,6 +94,7 @@
 		751BB78928A1558D002D24AF /* CommentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentTableViewCell.xib; sourceTree = "<group>"; };
 		7542735E28A50CD80012D0FC /* AdAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdAPI.swift; sourceTree = "<group>"; };
 		7542736328A50CE80012D0FC /* AdModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdModel.swift; sourceTree = "<group>"; };
+		7542737628A635D30012D0FC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		756C8866289E862000DCFB15 /* GifExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifExtension.swift; sourceTree = "<group>"; };
 		756C886B289E867500DCFB15 /* SplashScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenViewController.swift; sourceTree = "<group>"; };
 		75801265289E3D2E003BF69B /* MainTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewController.swift; sourceTree = "<group>"; };
@@ -113,7 +114,6 @@
 		75F32EA028A3E8F100ED8535 /* ProfilePostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePostCollectionViewCell.swift; sourceTree = "<group>"; };
 		75F32EA128A3E8F100ED8535 /* ProfilePostCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfilePostCollectionViewCell.xib; sourceTree = "<group>"; };
 		75F32EA728A40FB600ED8535 /* GetUserPostsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserPostsAPI.swift; sourceTree = "<group>"; };
-		75F32EAC28A4CA8B00ED8535 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		75F48C35289B9167005AFE9F /* Instagram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Instagram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75F48C38289B9167005AFE9F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		75F48C3A289B9167005AFE9F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -210,6 +210,7 @@
 		75F48C2C289B9167005AFE9F = {
 			isa = PBXGroup;
 			children = (
+				7542737628A635D30012D0FC /* GoogleService-Info.plist */,
 				75F48C37289B9167005AFE9F /* Instagram */,
 				75F48C4E289B9169005AFE9F /* InstagramTests */,
 				75F48C59289B9169005AFE9F /* InstagramUITests */,
@@ -245,7 +246,6 @@
 				75F48C41289B9169005AFE9F /* Assets.xcassets */,
 				75F48C43289B9169005AFE9F /* LaunchScreen.storyboard */,
 				75F48C46289B9169005AFE9F /* Info.plist */,
-				75F32EAC28A4CA8B00ED8535 /* GoogleService-Info.plist */,
 			);
 			path = Instagram;
 			sourceTree = "<group>";
@@ -462,7 +462,7 @@
 			files = (
 				75F32EA328A3E8F100ED8535 /* ProfilePostCollectionViewCell.xib in Resources */,
 				75F48CA6289BCAF7005AFE9F /* StoryCollectionViewCell.xib in Resources */,
-				75F32EAD28A4CA8B00ED8535 /* GoogleService-Info.plist in Resources */,
+				7542737728A635D30012D0FC /* GoogleService-Info.plist in Resources */,
 				75801273289E3F29003BF69B /* FeedTableViewCell.xib in Resources */,
 				75F48C45289B9169005AFE9F /* LaunchScreen.storyboard in Resources */,
 				75F48C42289B9169005AFE9F /* Assets.xcassets in Resources */,

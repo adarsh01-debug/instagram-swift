@@ -112,7 +112,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
                 imageUpload.image = image
-                let imageRef = storageRef.child("image")
+                let imageRef = storageRef.child(getTime())
                            let imageData : Data = image.pngData()!
                            imageRef.putData(imageData,metadata: nil, completion: {_, error in
                                guard error == nil else {
@@ -141,5 +141,15 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
             print(userId)
             self.userId = userId
         }
+    }
+    
+    func getTime() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd HH:mm"
+        let someDateTime = formatter.date(from: "2022/08/10 22:00")
+        if let dateTime = someDateTime {
+            return String(describing: dateTime)
+        }
+        return "default_name"
     }
 }

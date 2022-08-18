@@ -21,7 +21,7 @@ class AddStoryViewController: UIViewController, UIImagePickerControllerDelegate,
     var loggedInUser: UserModel?
     var userId: String?
     var loginTemp = LoginTemp()
-    var imageUrl: String?
+    var strURL: String?
     
     // MARK: - Actions
     @IBAction func choosePhotoButtonAction(_ sender: Any) {
@@ -35,7 +35,7 @@ class AddStoryViewController: UIViewController, UIImagePickerControllerDelegate,
     
     @IBAction func shareButtonAction(_ sender: Any) {
         if isImageSelected {
-            if let _ = self.storyImage.image?.jpegData(compressionQuality: 0.7), let userId = self.userId, let imageUrl = self.imageUrl {
+            if let _ = self.storyImage.image?.jpegData(compressionQuality: 0.7), let userId = self.userId, let imageUrl = self.strURL {
                 let stringURL = "http://10.20.4.157:9011/story/add-story"
                 guard let url = URL(string: stringURL) else {
                     print("Problem in url string")
@@ -74,27 +74,31 @@ class AddStoryViewController: UIViewController, UIImagePickerControllerDelegate,
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
                 storyImage.image = image
-                let imageRef = storageRef.child("image")
+                let imageRef = storageRef.child(getTime())
                            let imageData : Data = image.pngData()!
-                           imageRef.putData(imageData,metadata: nil, completion: {_, error in
-                               guard error == nil else {
-                                print(error.debugDescription)
-                                   print("Failed to upload")
-                                   return
-                               }
-                           })
-                           imageRef.downloadURL(completion: {url, error in
-                               guard let url = url , error == nil else {
-                                   return
-                               }
-                                let urlString = url.absoluteString
-                                print("image URL: ", urlString)
-                                self.imageUrl = urlString
-                           })
+                imageRef.putData(imageData, metadata: nil, completion: { (metaData, error) in
+                            imageRef.downloadURL(completion: { (url, error) in
+                                if let urlText = url?.absoluteString {
+
+                                    self.strURL = urlText
+                                    print("///////////tttttttt//////// \(String(describing: self.strURL))   ////////")
+
+                                    //completion(strURL)
+                                }
+                            })
+                        })
                            isImageSelected = true
-                       } else {
-                           print("Error")
-            }
+                       }
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    func getTime() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd HH:mm"
+        let someDateTime = formatter.date(from: "2022/08/10 22:00")
+        if let dateTime = someDateTime {
+            return String(describing: dateTime)
+        }
+        return "default_name"
     }
 }

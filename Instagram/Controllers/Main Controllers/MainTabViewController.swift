@@ -33,6 +33,7 @@ class MainTabViewController: UITabBarController, UITabBarControllerDelegate {
         cameraViewController = cameraNavController?.topViewController as? CameraViewController
         homeNavController = self.viewControllers?[0] as? UINavigationController
         homeViewController = homeNavController?.topViewController as? HomeViewController
+        homeViewController?.userId = self.userId
         profileNavController = self.viewControllers?[3] as? UINavigationController
         profileViewController = profileNavController?.topViewController as? ProfileViewController
         searchNavController = self.viewControllers?[1] as? UINavigationController
